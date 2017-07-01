@@ -23,7 +23,9 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-
+#include "SpriteCodex.h"
+#include "Board.h"
+#include "Block.h"
 
 class Game
 {
@@ -41,6 +43,9 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
+	Board brd;
+	Block blck;
+	
 	/********************************/
 	/*  User Variables              */
 	/********************************/
