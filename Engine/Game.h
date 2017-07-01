@@ -26,6 +26,7 @@
 #include "SpriteCodex.h"
 #include "Board.h"
 #include "Block.h"
+#include "FrameTimer.h"
 
 class Game
 {
@@ -45,7 +46,7 @@ private:
 	Graphics gfx;
 	Board brd;
 	Block blck;
-	
+	FrameTimer ft;
 	/********************************/
 	/*  User Variables              */
 	/********************************/

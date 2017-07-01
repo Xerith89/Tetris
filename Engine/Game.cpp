@@ -40,12 +40,22 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-
+	const float dt = ft.Mark();
+	blck.TakeInput(wnd.kbd, dt);
+	blck.BindPiece();
+	blck.UpdatePiece(dt);
 }
 
 void Game::ComposeFrame()
 {	
-	brd.DrawWall();
+	brd.DrawWall(); //draw this first
+	for (int i = 0; i < 100; i++)
+	{
+		if (blck.canDraw[i])
+		{
+			brd.DrawCube(blck.loc[i]);
+		}
+	}
 }
 
 
