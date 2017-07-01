@@ -54,13 +54,7 @@
     <ClInclude Include="Location.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Snake.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Board.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Fruit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FrameTimer.h">
@@ -92,13 +86,7 @@
     <ClCompile Include="SpriteCodex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Snake.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Fruit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FrameTimer.cpp">

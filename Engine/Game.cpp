@@ -24,12 +24,9 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd ),
-	xDist(2, 37),
-	yDist(2, 27),
-	brd(gfx)
+	gfx( wnd )
+
 {
-	snake.bloct[0] = { snake.loc.x - 1, snake.loc.y };
 }
 
 void Game::Go()
@@ -42,64 +39,12 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	const float dt = ft.Mark();
-	if (wnd.kbd.KeyIsPressed(VK_RETURN) && !isGameStarted )
-	{
-		isGameStarted = true;
-		isGameOver = false;
-	}
-	else if (wnd.kbd.KeyIsPressed(VK_RETURN) && isGameOver)
-	{
-		isGameOver = false;
-		isGameStarted = true;
-	}
-
-	if (!isGameOver && isGameStarted)
-	{
-		snake.CheckKeyboard(wnd.kbd);
-		snake.UpdateSnake(dt);
-		SpawnFruit();
-		if (snake.insideTile() || snake.HitWall())
-		{
-			isGameStarted = false;
-			isGameOver = true;
-		}
-	}
+	
 }
 
 void Game::ComposeFrame()
 {
-	if (isGameOver)
-	{
-		sprite.DrawGameOver(250, 300, gfx);
-	}
 	
-	if (!isGameStarted && !isGameOver)
-	{
-		sprite.DrawTitle(250, 250, gfx);
-	}
-	else if (isGameStarted && !isGameOver)
-	{
-		snake.DrawHead(brd, snake.loc);
-		fruit.DrawFruit(brd, floc);
-		for (int i = 1; i < snake.nSegments; i++)
-		{
-			snake.DrawBody(brd, snake.bloct[i]);
-		}
-		brd.DrawWall(Colors::Blue);
-	}
-}
-
-void Game::SpawnFruit()
-{
-	if (snake.loc.x == floc.x && snake.loc.y == floc.y)
-	{
-		snake.GrowSnake();
-		snake.bloct[snake.nSegments].x = snake.bloct[snake.nSegments - 1].x;
-		snake.bloct[snake.nSegments].y = snake.bloct[snake.nSegments - 1].y;
-		floc = { xDist(rng),yDist(rng) };
-		snake.SpeedUp();
-	}
 }
 
 

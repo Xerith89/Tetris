@@ -23,12 +23,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Board.h"
-#include "Snake.h"
-#include "SpriteCodex.h"
-#include "Fruit.h"
-#include <random>
-#include "FrameTimer.h"
+
 
 class Game
 {
@@ -40,25 +35,12 @@ public:
 private:
 	void ComposeFrame();
 	void UpdateModel();
-	void SpawnFruit();
 	/********************************/
 	/*  User Functions              */
 	/********************************/
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	Board brd;
-	Snake snake;
-	SpriteCodex sprite;
-	Fruit fruit;
-	FrameTimer ft;
-	std::random_device rd;
-	std::mt19937 rng;
-	std::uniform_int_distribution<int>xDist;
-	std::uniform_int_distribution<int>yDist;
-	Location floc = { xDist(rng),yDist(rng) };
-	bool isGameOver = false;
-	bool isGameStarted = false;
 	/********************************/
 	/*  User Variables              */
 	/********************************/
