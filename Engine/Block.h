@@ -10,7 +10,7 @@ private:
 	
 public:
 	Location nextBrick = { 33,23 };
-	Location loc = { 33,23};
+	Location loc = { 23,23};
 	Block();
 };
 

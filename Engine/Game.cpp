@@ -46,7 +46,6 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {	
 	brd.DrawWall();
-	brd.DrawCube(blck.loc);
 }
 
 
