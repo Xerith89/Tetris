@@ -29,7 +29,7 @@ private:
 public:
 	void TakeInput(Keyboard& kbd, float dt);
 	void SpawnPiece(Board& brd, int randpiece);
-	void UpdatePiece(float dt, int piece);
+	void UpdatePiece(float dt);
 	void DrawPiece(Board& brd);
 	void DrawNextPiece(Board& brd);
 	void BindPiece();

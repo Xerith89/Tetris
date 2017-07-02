@@ -99,7 +99,7 @@ void Block::SpawnPiece(Board& brd, int randpiece)
 	canDraw[currentPiece] = true;
 }
 
-void Block::UpdatePiece(float dt, int piece)
+void Block::UpdatePiece(float dt)
 {
 	if (downCounter >= downCD)
 	{

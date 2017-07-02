@@ -47,7 +47,7 @@ void Game::UpdateModel()
 	const float dt = ft.Mark();
 	blck.TakeInput(wnd.kbd, dt);
 	blck.BindPiece();
-	blck.UpdatePiece(dt, blocksel(rng));
+	blck.UpdatePiece(dt);
 	if (blck.canSpawn)
 	{
 		blck.SpawnPiece(brd, blocksel(rng));
