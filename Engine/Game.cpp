@@ -25,9 +25,11 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	brd(gfx)
-
+	brd(gfx),
+	blck(brd)
 {
+	blck.loc[0] = { blck.spawnloc };
+	blck.pieceType[blck.currentPiece] = 6;
 }
 
 void Game::Go()
@@ -44,18 +46,17 @@ void Game::UpdateModel()
 	blck.TakeInput(wnd.kbd, dt);
 	blck.BindPiece();
 	blck.UpdatePiece(dt);
+	if (blck.canSpawn)
+	{
+		blck.SpawnPiece(brd);
+	}
 }
 
 void Game::ComposeFrame()
 {	
-	brd.DrawWall(); //draw this first
-	for (int i = 0; i < 100; i++)
-	{
-		if (blck.canDraw[i])
-		{
-			brd.DrawCube(blck.loc[i]);
-		}
-	}
+	brd.DrawWall(); 
+	blck.DrawNextPiece(brd);
+	blck.DrawPiece(brd);
 }
 
 

@@ -232,6 +232,11 @@ void Board::DrawWall()
 	{
 		SpriteCodex::DrawBlockWall(cellDimension * i, cellDimension*29, gfx);
 	}
+	gfx.DrawRectDim(cellDimension * 6, cellDimension * 28, cellDimension * 29, cellDimension); //Draw Bottom Wall
+	for (int i = 6; i < 29; i++)
+	{
+		SpriteCodex::DrawBlockWall(cellDimension * i, cellDimension * 28, gfx);
+	}
 	for (int i = 29; i < 40; i++)
 	{
 		SpriteCodex::DrawBlockWall(cellDimension * i, cellDimension * 17, gfx);
