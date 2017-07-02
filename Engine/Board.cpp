@@ -259,6 +259,8 @@ void Board::DrawWall()
 	{
 		SpriteCodex::DrawBlockWall(cellDimension * 39, cellDimension * i, gfx);
 	}
+	SpriteCodex::DrawLinesText(cellDimension * 29, cellDimension * 12, gfx);
+	SpriteCodex::DrawNextText(cellDimension * 29, cellDimension * 19, gfx);
 }
 
 

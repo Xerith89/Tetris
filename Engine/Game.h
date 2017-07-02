@@ -27,6 +27,7 @@
 #include "Board.h"
 #include "Block.h"
 #include "FrameTimer.h"
+#include <random>
 
 class Game
 {
@@ -47,6 +48,9 @@ private:
 	Board brd;
 	Block blck;
 	FrameTimer ft;
+	std::random_device rd;
+	std::mt19937 rng;
+	std::uniform_int_distribution<int>blocksel;
 	/********************************/
 	/*  User Variables              */
 	/********************************/

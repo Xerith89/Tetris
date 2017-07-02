@@ -17,4 +17,6 @@ public:
 	static void DrawBlockBlack(int x, int y, Graphics& gfx);
 	static void DrawBlockAqua(int x, int y, Graphics& gfx);
 	static void DrawBlockWall(int x, int y, Graphics& gfx);
+	static void DrawLinesText(int x, int y, Graphics& gfx);
+	static void DrawNextText(int x, int y, Graphics& gfx);
 };

@@ -6,6 +6,7 @@ void Block::TakeInput(Keyboard & kbd, float dt)
 {
 	counter += speed * dt;
 	downCounter += speed *dt;
+	rotcounter += speed*dt;
 	if (kbd.KeyIsPressed(VK_LEFT) && counter >= inputCD)
 	{
 		loc[currentPiece - 1].x -= 1;
@@ -16,14 +17,15 @@ void Block::TakeInput(Keyboard & kbd, float dt)
 		loc[currentPiece - 1].x += 1;
 		counter = 0.0f;
 	}
-	if (kbd.KeyIsPressed(VK_DOWN))
+	if (kbd.KeyIsPressed(VK_DOWN) && counter >= inputCD)
 	{
 		loc[currentPiece - 1].y += 1;
 		counter = 0.0f;
 	}
-	if (kbd.KeyIsPressed(VK_RETURN))
+	if (kbd.KeyIsPressed(VK_RETURN) && rotcounter >= rotCD)
 	{
-		//Rotate Piece
+		RotatePiece();
+		rotcounter = 0.0f;
 	}
 	//////////////////////////////////////////////////////////////////
 	//						test code
@@ -56,8 +58,8 @@ void Block::TakeInput(Keyboard & kbd, float dt)
 		nextPiece = rightl;
 	}
 }
-
-void Block::SpawnPiece(Board& brd)
+////////////////////////////////////////////////////////////////////////
+void Block::SpawnPiece(Board& brd, int randpiece)
 {
 	canSpawn = false;
 	loc[currentPiece].x = spawnloc.x;
@@ -67,30 +69,37 @@ void Block::SpawnPiece(Board& brd)
 	{
 	case cube:
 		pieceType[currentPiece] = cube;
+		nextPiece = randpiece;
 		break;
 	case line:
 		pieceType[currentPiece] = line;
+		nextPiece = randpiece;
 		break;
 	case t:
 		pieceType[currentPiece] = t;
+		nextPiece = randpiece;
 		break;
 	case z:
 		pieceType[currentPiece] = z;
+		nextPiece = randpiece;
 		break;
 	case two:
 		pieceType[currentPiece] = two;
+		nextPiece = randpiece;
 		break;
 	case leftl:
 		pieceType[currentPiece] = leftl;
+		nextPiece = randpiece;
 		break;
 	case rightl:
 		pieceType[currentPiece] = rightl;
+		nextPiece = randpiece;
 		break;
 	}
 	canDraw[currentPiece] = true;
 }
 
-void Block::UpdatePiece(float dt)
+void Block::UpdatePiece(float dt, int piece)
 {
 	if (downCounter >= downCD)
 	{
@@ -99,7 +108,7 @@ void Block::UpdatePiece(float dt)
 
 		if (loc[currentPiece-1].y >= 27)
 		{
-			SpawnPiece(brd);
+			SpawnPiece(brd, nextPiece);
 		}
 	}
 }
@@ -108,7 +117,7 @@ void Block::DrawPiece(Board & brd)
 {
 	for (int i = 0; i < 100; i++)
 	{
-		if (canDraw[i-1])
+		if (canDraw[i - 1])
 		{
 			if (i == 0)
 			{
@@ -143,31 +152,32 @@ void Block::DrawPiece(Board & brd)
 				switch (pieceType[i])
 				{
 				case cube:
-					brd.DrawCube(loc[i-1]);
+					brd.DrawCube(loc[i - 1]);
 					break;
 				case line:
-					brd.DrawLineH(loc[i-1]);
+					brd.DrawLineH(loc[i - 1]);
 					break;
 				case t:
-					brd.DrawTD(loc[i-1]);
+					brd.DrawTD(loc[i - 1]);
 					break;
 				case z:
-					brd.DrawZH(loc[i-1]);
+					brd.DrawZH(loc[i - 1]);
 					break;
 				case two:
-					brd.Draw2H(loc[i-1]);
+					brd.Draw2H(loc[i - 1]);
 					break;
 				case leftl:
-					brd.DrawLLL(loc[i-1]);
+					brd.DrawLLL(loc[i - 1]);
 					break;
 				case rightl:
-					brd.DrawRLR(loc[i-1]);
+					brd.DrawRLR(loc[i - 1]);
 					break;
 				}
 			}
-			}
 		}
 	}
+}
+
 
 void Block::DrawNextPiece(Board & brd)
 {
@@ -211,6 +221,10 @@ void Block::BindPiece()
 	{
 		canSpawn = true;
 	}
+}
+
+void Block::RotatePiece()
+{
 }
 
 Block::Block(Board& brd)
