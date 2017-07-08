@@ -316,7 +316,7 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
-void Graphics::DrawRect( int x0,int y0,int x1,int y1)
+void Graphics::DrawRect( int x0,int y0,int x1,int y1, Color c)
 {
 	if( x0 > x1 )
 	{
@@ -331,7 +331,7 @@ void Graphics::DrawRect( int x0,int y0,int x1,int y1)
 	{
 		for( int x = x0; x < x1; ++x )
 		{
-			PutPixel( x,y, Colors::Blue);
+			PutPixel( x,y, c);
 		}
 	}
 }

@@ -1,21 +1,21 @@
 #include "Board.h"
 
-void Board::DrawCell(Location & loc)const
+void Board::DrawCell(Location & loc,Color c)const
 {
-	gfx.DrawRectDim(loc.x*cellDimension, loc.y*cellDimension, cellDimension, cellDimension);
+	gfx.DrawRectDim(loc.x*cellDimension, loc.y*cellDimension, cellDimension, cellDimension, c);
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //										Cube Drawing Code White
 void Board::DrawCube(Location & loc)const
 {
-	DrawCell(loc);
+	DrawCell(loc, Colors::White);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //									Line Block Drawing Code Blue
 void Board::DrawLineH(Location & loc)const
 {
-	gfx.DrawRectDim(loc.x*cellDimension, loc.y*cellDimension, cellDimension * 3, -cellDimension);
+	DrawCell(loc, Colors::Cyan);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,8 +23,7 @@ void Board::DrawLineH(Location & loc)const
 void Board::DrawTD(Location & loc) const
 {
 	
-	gfx.DrawRectDim(loc.x*cellDimension+cellDimension, loc.y*cellDimension, cellDimension, -cellDimension);
-	gfx.DrawRectDim(loc.x*cellDimension, loc.y*cellDimension-cellDimension*2, cellDimension*3, cellDimension);
+	DrawCell(loc, Colors::Gray);
 	
 }
 
@@ -33,8 +32,7 @@ void Board::DrawTD(Location & loc) const
 
 void Board::DrawZH(Location & loc) const
 {
-	gfx.DrawRectDim(loc.x*cellDimension+cellDimension, loc.y*cellDimension-cellDimension, cellDimension*2, cellDimension);
-	gfx.DrawRectDim(loc.x*cellDimension+cellDimension*2, loc.y*cellDimension-cellDimension*2, -cellDimension*2 , cellDimension);
+	DrawCell(loc, Colors::Yellow);
 	
 }
 
@@ -42,49 +40,42 @@ void Board::DrawZH(Location & loc) const
 //														Draw 2 Blocks
 void Board::Draw2H(Location & loc) const
 {
-	gfx.DrawRectDim(loc.x*cellDimension + cellDimension, loc.y*cellDimension - cellDimension, cellDimension * 2, cellDimension);
-	gfx.DrawRectDim(loc.x*cellDimension + (cellDimension*2), loc.y*cellDimension -cellDimension*2, cellDimension * 2, cellDimension);
+	DrawCell(loc, Colors::Green);
 	
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                      Draw Left Side L Blocks
 void Board::DrawLLL(Location & loc) const
 {
-	gfx.DrawRectDim(loc.x*cellDimension, loc.y*cellDimension, cellDimension, -cellDimension);
-	gfx.DrawRectDim(loc.x*cellDimension, loc.y*cellDimension, cellDimension, -cellDimension * 2);
-	gfx.DrawRectDim(loc.x*cellDimension, loc.y*cellDimension, cellDimension, -cellDimension * 3);
-	gfx.DrawRectDim(loc.x*cellDimension - cellDimension, loc.y*cellDimension, cellDimension, -cellDimension);
+	DrawCell(loc, Colors::Red);
 	
 }
 /////////////////////////////////////////////////////////////////////////
 //									Draw Right Side L Blocks
 void Board::DrawRLR(Location & loc) const
 {
-	gfx.DrawRectDim(loc.x*cellDimension, loc.y*cellDimension, cellDimension, -cellDimension);
-	gfx.DrawRectDim(loc.x*cellDimension, loc.y*cellDimension, cellDimension, -cellDimension * 2);
-	gfx.DrawRectDim(loc.x*cellDimension, loc.y*cellDimension, cellDimension, -cellDimension * 3);
-	gfx.DrawRectDim(loc.x*cellDimension + cellDimension, loc.y*cellDimension, cellDimension, -cellDimension);
+	DrawCell(loc, Colors::Blue);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //												Draw the Board Layout
 void Board::DrawWall()
 {
-	gfx.DrawRectDim(cellDimension*6, 0, cellDimension, cellDimension * 30); //Draw Left Wall
+	gfx.DrawRectDim(cellDimension*6, 0, cellDimension, cellDimension * 30,Colors::Black); //Draw Left Wall
 	for (int i = 0; i < cellDimension+10; i++)
 	{
 		SpriteCodex::DrawBlockWall(cellDimension*6, 0+(cellDimension*i), gfx);
 	}
-	gfx.DrawRectDim(cellDimension * 28, 0, cellDimension, cellDimension * 30); //Draw Right Wall
+	gfx.DrawRectDim(cellDimension * 28, 0, cellDimension, cellDimension * 30, Colors::Black); //Draw Right Wall
 	for (int i = 0; i < cellDimension + 10; i++)
 	{
 		SpriteCodex::DrawBlockWall(cellDimension * 28, 0 + (cellDimension*i), gfx);
 	}
-	gfx.DrawRectDim(cellDimension *6, cellDimension*29, cellDimension*23, cellDimension); //Draw Bottom Wall
+	gfx.DrawRectDim(cellDimension *6, cellDimension*29, cellDimension*23, cellDimension, Colors::Black); //Draw Bottom Wall
 	for (int i = 6; i < 29; i++)
 	{
 		SpriteCodex::DrawBlockWall(cellDimension * i, cellDimension*29, gfx);
 	}
-	gfx.DrawRectDim(cellDimension * 6, cellDimension * 28, cellDimension * 29, cellDimension); //Draw Bottom Wall
+	gfx.DrawRectDim(cellDimension * 6, cellDimension * 28, cellDimension * 29, cellDimension, Colors::Black); //Draw Bottom Wall
 	for (int i = 6; i < 29; i++)
 	{
 		SpriteCodex::DrawBlockWall(cellDimension * i, cellDimension * 28, gfx);

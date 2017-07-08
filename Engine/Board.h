@@ -11,7 +11,7 @@ private:
 	static constexpr int cellDimension = cellWidth+cellHeight;
 	Graphics& gfx;
 public:
-	void DrawCell(Location& loc)const; 
+	void DrawCell(Location& loc, Color c)const; 
 	void DrawCube(Location& loc)const;
 	void DrawLineH(Location& loc)const;
 	void DrawTD(Location& loc)const;
