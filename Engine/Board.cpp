@@ -8,7 +8,19 @@ void Board::DrawCell(Location & loc,Color c)const
 //										Cube Drawing Code White
 void Board::DrawCube(Location & loc)const
 {
+	Location bottomright;
+	Location topright;
+	Location topleft;
+	bottomright.x = loc.x + 1;
+	bottomright.y = loc.y;
+	topright.x = loc.x + 1;
+	topright.y = loc.y - 1;
+	topleft.x = loc.x;
+	topleft.y = loc.y - 1;
 	DrawCell(loc, Colors::White);
+	DrawCell(bottomright, Colors::White);
+	DrawCell(topright, Colors::White);
+	DrawCell(topleft, Colors::White);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,8 +35,7 @@ void Board::DrawLineH(Location & loc)const
 void Board::DrawTD(Location & loc) const
 {
 	
-	DrawCell(loc, Colors::Gray);
-	
+	DrawCell(loc, Colors::Gray); 	
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

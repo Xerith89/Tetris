@@ -10,8 +10,9 @@ void Block::TakeInput(Keyboard & kbd, float dt)
 	if (kbd.KeyIsPressed(VK_LEFT) && counter >= inputCD)
 	{
 		loc[currentPiece].x -= 1;
-		counter = 0.0f;
+		counter = 0.0f;	
 	}
+		
 	if (kbd.KeyIsPressed(VK_RIGHT) && counter >= inputCD)
 	{
 		loc[currentPiece].x += 1;
@@ -62,6 +63,8 @@ void Block::TakeInput(Keyboard & kbd, float dt)
 void Block::SpawnPiece(Board& brd, int randpiece)
 {
 	canSpawn = false;
+	//if we are currently a cube
+	CubeFillTiles();
 	currentPiece++;
 	loc[currentPiece].x = spawnloc.x;
 	loc[currentPiece].y = spawnloc.y;
@@ -105,8 +108,6 @@ void Block::UpdatePiece(float dt)
 	{
 		loc[currentPiece].y += 1;
 		downCounter = 0.0f;
-
-	
 	}
 }
 
@@ -184,6 +185,8 @@ void Block::BindPiece()
 	}
 	if (loc[currentPiece].y >= 27)
 	{
+		//switch statement goes here for each piece
+		CubeFillTiles();
 		SpawnPiece(brd, nextPiece);
 	}
 	
@@ -193,17 +196,30 @@ void Block::BindPiece()
 
 void Block::RotatePiece()
 {
+	//todo
 }
 
 void Block::CubeCollision(Board& brd)
 {
-	for (int i = 0; i < maxPieces; i++)
+	Location bottomright;
+	Location bottomleft;
+	bottomleft.x = loc[currentPiece].x;
+	bottomleft.y = loc[currentPiece].y;
+	bottomright.x = loc[currentPiece].x + 1;
+	bottomright.y = loc[currentPiece].y;
+	
+	if (tileFull[bottomright.y+1][bottomright.x] == true || tileFull[bottomleft.y+1][bottomleft.x])
 	{
-		if (loc[currentPiece].y + 1 == loc[i].y && loc[currentPiece].x == loc[i].x)
-		{
-			SpawnPiece(brd, nextPiece);
-		}
+		SpawnPiece(brd, nextPiece);
 	}
+}
+
+void Block::CubeFillTiles()
+{
+	tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+	tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] = true;
+	tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+	tileFull[loc[currentPiece].y-1][loc[currentPiece].x + 1] = true;
 }
 
 Block::Block(Board& brd)

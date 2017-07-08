@@ -8,6 +8,8 @@ class Block
 {
 private:
 	static constexpr int maxPieces = 100;
+	static constexpr int y = 27;
+	static constexpr int x = 19;
 	float speed = 4.0f;
 	Board& brd;
 	float inputCD = 5.0f;
@@ -35,9 +37,11 @@ public:
 	void BindPiece();
 	void RotatePiece();
 	void CubeCollision(Board& brd);
+	void CubeFillTiles();
 	Location nextBrick = { 33,23 };
 	Location spawnloc = { 17,18};
 	Location loc[maxPieces];
+	bool tileFull[y][x] = { false };
 	bool canDraw[maxPieces] = { false };
 	int currentPiece = 0;
 	int pieceType[maxPieces];
