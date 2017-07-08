@@ -27,7 +27,6 @@ void Block::TakeInput(Keyboard & kbd, float dt)
 	}
 	if (kbd.KeyIsPressed(VK_RETURN) && rotcounter >= rotCD)
 	{
-		RotatePiece();
 		rotcounter = 0.0f;
 	}
 	//////////////////////////////////////////////////////////////////
@@ -65,8 +64,16 @@ void Block::TakeInput(Keyboard & kbd, float dt)
 void Block::SpawnPiece(Board& brd, int randpiece)
 {
 	canSpawn = false;
-	//if we are currently a cube
-	CubeFillTiles();
+	switch (pieceType[currentPiece])
+	{
+	case cube:
+		CubeFillTiles();
+		break;
+	case line:
+		LineFillTiles();
+		break;
+	}
+	
 	currentPiece++;
 	loc[currentPiece].x = spawnloc.x;
 	loc[currentPiece].y = spawnloc.y;
@@ -104,18 +111,9 @@ void Block::SpawnPiece(Board& brd, int randpiece)
 	canDraw[currentPiece] = true;
 }
 
-void Block::UpdatePiece(float dt)
-{
-	if (downCounter >= downCD)
-	{
-		loc[currentPiece].y += 1;
-		downCounter = 0.0f;
-	}
-}
-
 void Block::DrawPiece(Board & brd)
 {
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < maxPieces; i++)
 	{
 		if (i >= 0)
 			{
@@ -175,7 +173,7 @@ void Block::DrawNextPiece(Board & brd)
 	}
 }
 
-void Block::BindPiece()
+void Block::BindPiece(float dt)
 {
 	if (loc[currentPiece].x <= 7)
 	{
@@ -187,18 +185,34 @@ void Block::BindPiece()
 	}
 	if (loc[currentPiece].y >= 27)
 	{
-		//switch statement goes here for each piece
-		CubeFillTiles();
+		switch (pieceType[currentPiece])
+		{
+		case cube:
+			CubeFillTiles();
+			break;
+		case line:
+			LineFillTiles();
+			break;
+		}
 		SpawnPiece(brd, nextPiece);
 	}
-	
+
+	if (downCounter >= downCD)
+	{
+		loc[currentPiece].y += 1;
+		downCounter = 0.0f;
+	}
+	switch (pieceType[currentPiece])
+	{
+	case cube:
 		CubeCollision(brd);
+		break;
+	case line:
+		LineCollision(brd);
+		break;
+	}
+		
 
-}
-
-void Block::RotatePiece()
-{
-	//todo
 }
 
 void Block::CubeCollision(Board& brd)
@@ -216,12 +230,41 @@ void Block::CubeCollision(Board& brd)
 	}
 }
 
+void Block::LineCollision(Board & brd)
+{
+	Location left;
+	Location middleleft;
+	Location middleright;
+	Location right;
+	middleleft.x = loc[currentPiece].x + 1;
+	middleleft.y = loc[currentPiece].y;
+	middleright.x = middleleft.x + 1;
+	middleright.y = middleleft.y;
+	right.x = middleright.x + 1;
+	right.y = middleright.y;
+	left.x = loc[currentPiece].x;
+	left.y = loc[currentPiece].y;
+
+	if (tileFull[left.y + 1][left.x] || tileFull[middleleft.y + 1][middleleft.x] || tileFull[middleright.y + 1][middleright.x] || tileFull[right.y + 1][right.x])
+	{
+		SpawnPiece(brd, nextPiece);
+	}
+}
+
 void Block::CubeFillTiles()
 {
 	tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
 	tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] = true;
 	tileFull[loc[currentPiece].y-1][loc[currentPiece].x] = true;
-	tileFull[loc[currentPiece].y-1][loc[currentPiece].x+1] = true;
+	tileFull[loc[currentPiece].y-1][loc[currentPiece].x + 1] = true;
+}
+
+void Block::LineFillTiles()
+{
+	tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+	tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] = true;
+	tileFull[loc[currentPiece].y][loc[currentPiece].x + 2] = true;
+	tileFull[loc[currentPiece].y][loc[currentPiece].x + 3] = true;
 }
 
 Block::Block(Board& brd)

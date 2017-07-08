@@ -31,13 +31,13 @@ private:
 public:
 	void TakeInput(Keyboard& kbd, float dt);
 	void SpawnPiece(Board& brd, int randpiece);
-	void UpdatePiece(float dt);
 	void DrawPiece(Board& brd);
 	void DrawNextPiece(Board& brd);
-	void BindPiece();
-	void RotatePiece();
+	void BindPiece(float dt);
 	void CubeCollision(Board& brd);
+	void LineCollision(Board& brd);
 	void CubeFillTiles();
+	void LineFillTiles();
 	Location nextBrick = { 33,23 };
 	Location spawnloc = { 17,18};
 	Location loc[maxPieces];
