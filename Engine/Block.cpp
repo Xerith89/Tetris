@@ -9,17 +9,17 @@ void Block::TakeInput(Keyboard & kbd, float dt)
 	rotcounter += speed*dt;
 	if (kbd.KeyIsPressed(VK_LEFT) && counter >= inputCD)
 	{
-		loc[currentPiece - 1].x -= 1;
+		loc[currentPiece].x -= 1;
 		counter = 0.0f;
 	}
 	if (kbd.KeyIsPressed(VK_RIGHT) && counter >= inputCD)
 	{
-		loc[currentPiece - 1].x += 1;
+		loc[currentPiece].x += 1;
 		counter = 0.0f;
 	}
 	if (kbd.KeyIsPressed(VK_DOWN) && counter >= inputCD)
 	{
-		loc[currentPiece - 1].y += 1;
+		loc[currentPiece].y += 1;
 		counter = 0.0f;
 	}
 	if (kbd.KeyIsPressed(VK_RETURN) && rotcounter >= rotCD)
@@ -62,9 +62,9 @@ void Block::TakeInput(Keyboard & kbd, float dt)
 void Block::SpawnPiece(Board& brd, int randpiece)
 {
 	canSpawn = false;
+	currentPiece++;
 	loc[currentPiece].x = spawnloc.x;
 	loc[currentPiece].y = spawnloc.y;
-	currentPiece++;
 	switch (nextPiece)
 	{
 	case cube:
@@ -103,13 +103,10 @@ void Block::UpdatePiece(float dt)
 {
 	if (downCounter >= downCD)
 	{
-		loc[currentPiece-1].y += 1;
+		loc[currentPiece].y += 1;
 		downCounter = 0.0f;
 
-		if (loc[currentPiece-1].y >= 27)
-		{
-			SpawnPiece(brd, nextPiece);
-		}
+	
 	}
 }
 
@@ -117,9 +114,7 @@ void Block::DrawPiece(Board & brd)
 {
 	for (int i = 0; i < 100; i++)
 	{
-		if (canDraw[i - 1])
-		{
-			if (i == 0)
+		if (i >= 0)
 			{
 				switch (pieceType[i])
 				{
@@ -146,38 +141,8 @@ void Block::DrawPiece(Board & brd)
 					break;
 				}
 			}
-
-			if (i > 0)
-			{
-				switch (pieceType[i])
-				{
-				case cube:
-					brd.DrawCube(loc[i - 1]);
-					break;
-				case line:
-					brd.DrawLineH(loc[i - 1]);
-					break;
-				case t:
-					brd.DrawTD(loc[i - 1]);
-					break;
-				case z:
-					brd.DrawZH(loc[i - 1]);
-					break;
-				case two:
-					brd.Draw2H(loc[i - 1]);
-					break;
-				case leftl:
-					brd.DrawLLL(loc[i - 1]);
-					break;
-				case rightl:
-					brd.DrawRLR(loc[i - 1]);
-					break;
-				}
-			}
 		}
 	}
-}
-
 
 void Block::DrawNextPiece(Board & brd)
 {
@@ -209,22 +174,36 @@ void Block::DrawNextPiece(Board & brd)
 
 void Block::BindPiece()
 {
-	if (loc[currentPiece-1].x <= 7)
+	if (loc[currentPiece].x <= 7)
 	{
-		loc[currentPiece-1].x = 7;
+		loc[currentPiece].x = 7;
 	}
-	if (loc[currentPiece-1].x >= 26)
+	if (loc[currentPiece].x >= 26)
 	{
-		loc[currentPiece-1].x = 26;
+		loc[currentPiece].x = 26;
 	}
-	if (loc[currentPiece-1].y >= 26 )
+	if (loc[currentPiece].y >= 27)
 	{
-		canSpawn = true;
+		SpawnPiece(brd, nextPiece);
 	}
+	
+		CubeCollision(brd);
+
 }
 
 void Block::RotatePiece()
 {
+}
+
+void Block::CubeCollision(Board& brd)
+{
+	for (int i = 0; i < maxPieces; i++)
+	{
+		if (loc[currentPiece].y + 1 == loc[i].y && loc[currentPiece].x == loc[i].x)
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
 }
 
 Block::Block(Board& brd)

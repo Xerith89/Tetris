@@ -34,13 +34,14 @@ public:
 	void DrawNextPiece(Board& brd);
 	void BindPiece();
 	void RotatePiece();
+	void CubeCollision(Board& brd);
 	Location nextBrick = { 33,23 };
-	Location spawnloc = { 17,0};
+	Location spawnloc = { 17,18};
 	Location loc[maxPieces];
 	bool canDraw[maxPieces] = { false };
 	int currentPiece = 0;
 	int pieceType[maxPieces];
-	bool canSpawn = true;
+	bool canSpawn = false;
 	int nextPiece;
 	Block(Board& brd);
 };
