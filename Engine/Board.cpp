@@ -27,7 +27,19 @@ void Board::DrawCube(Location & loc)const
 //									Line Block Drawing Code Blue
 void Board::DrawLineH(Location & loc)const
 {
+	Location middleleft;
+	Location middleright;
+	Location right;
+	middleleft.x = loc.x + 1;
+	middleleft.y = loc.y;
+	middleright.x = middleleft.x + 1;
+	middleright.y = middleleft.y;
+	right.x = middleright.x + 1;
+	right.y = middleright.y;
 	DrawCell(loc, Colors::Cyan);
+	DrawCell(middleleft, Colors::Cyan);
+	DrawCell(middleright, Colors::Cyan);
+	DrawCell(right, Colors::Cyan);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

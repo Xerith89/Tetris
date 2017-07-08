@@ -7,18 +7,20 @@ void Block::TakeInput(Keyboard & kbd, float dt)
 	counter += speed * dt;
 	downCounter += speed *dt;
 	rotcounter += speed*dt;
-	if (kbd.KeyIsPressed(VK_LEFT) && counter >= inputCD)
+	if (kbd.KeyIsPressed(VK_LEFT) && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x - 1] == false ||
+		kbd.KeyIsPressed(VK_LEFT) && counter >= inputCD && tileFull[loc[currentPiece].y+1][loc[currentPiece].x - 1] == false)
 	{
 		loc[currentPiece].x -= 1;
 		counter = 0.0f;	
 	}
 		
-	if (kbd.KeyIsPressed(VK_RIGHT) && counter >= inputCD)
+	if (kbd.KeyIsPressed(VK_RIGHT) && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] == false || 
+		kbd.KeyIsPressed(VK_RIGHT) && counter >= inputCD && tileFull[loc[currentPiece].y+1][loc[currentPiece].x + 1] == false)
 	{
 		loc[currentPiece].x += 1;
 		counter = 0.0f;
 	}
-	if (kbd.KeyIsPressed(VK_DOWN) && counter >= inputCD)
+	if (kbd.KeyIsPressed(VK_DOWN) && counter >= inputCD )
 	{
 		loc[currentPiece].y += 1;
 		counter = 0.0f;
@@ -208,7 +210,7 @@ void Block::CubeCollision(Board& brd)
 	bottomright.x = loc[currentPiece].x + 1;
 	bottomright.y = loc[currentPiece].y;
 	
-	if (tileFull[bottomright.y+1][bottomright.x] == true || tileFull[bottomleft.y+1][bottomleft.x])
+	if (tileFull[bottomright.y+1][bottomright.x] || tileFull[bottomleft.y+1][bottomleft.x])
 	{
 		SpawnPiece(brd, nextPiece);
 	}
@@ -218,8 +220,8 @@ void Block::CubeFillTiles()
 {
 	tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
 	tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] = true;
-	tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
-	tileFull[loc[currentPiece].y-1][loc[currentPiece].x + 1] = true;
+	tileFull[loc[currentPiece].y-1][loc[currentPiece].x] = true;
+	tileFull[loc[currentPiece].y-1][loc[currentPiece].x+1] = true;
 }
 
 Block::Block(Board& brd)

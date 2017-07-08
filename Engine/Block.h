@@ -8,8 +8,8 @@ class Block
 {
 private:
 	static constexpr int maxPieces = 100;
-	static constexpr int y = 27;
-	static constexpr int x = 19;
+	static constexpr int y = 28;
+	static constexpr int x = 20;
 	float speed = 4.0f;
 	Board& brd;
 	float inputCD = 5.0f;
