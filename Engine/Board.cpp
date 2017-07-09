@@ -104,6 +104,10 @@ void Board::DrawRLR(Location & loc) const
 {
 	DrawCell(loc, Colors::Blue);
 }
+void Board::DrawBlankLine(Location & loc) const
+{
+	gfx.DrawRectDim(cellDimension * 7, loc.y, cellDimension, cellDimension * 27, Colors::Blue);
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //												Draw the Board Layout
 void Board::DrawWall()

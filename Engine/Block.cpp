@@ -407,11 +407,16 @@ void Block::SetMostRight(int right)
 
 void Block::CheckLine()
 {
-	//if line is full
-	//stop drawing the cells in that line
-	//move everything down 1
-	//set cells above the top line to false
-	//add 1 to lines var
+		if (tileFull[loc[currentPiece].y][7] && tileFull[loc[currentPiece].y][8] && tileFull[loc[currentPiece].y][9] &&
+			tileFull[loc[currentPiece].y][10] && tileFull[loc[currentPiece].y][11] && tileFull[loc[currentPiece].y][12] &&
+			tileFull[loc[currentPiece].y][13] && tileFull[loc[currentPiece].y][14] && tileFull[loc[currentPiece].y][15] &&
+			tileFull[loc[currentPiece].y][16] && tileFull[loc[currentPiece].y][17] && tileFull[loc[currentPiece].y][18] &&
+			tileFull[loc[currentPiece].y][19] && tileFull[loc[currentPiece].y][20] && tileFull[loc[currentPiece].y][21] &&
+			tileFull[loc[currentPiece].y][22] && tileFull[loc[currentPiece].y][23] && tileFull[loc[currentPiece].y][24] &&
+			tileFull[loc[currentPiece].y][25] && tileFull[loc[currentPiece].y][26] && tileFull[loc[currentPiece].y][27])
+		{
+			lines = 1;
+		}
 }
 
 Block::Block(Board& brd)
