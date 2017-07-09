@@ -6,8 +6,8 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 {
 	counter += speed * dt;
 	downCounter += speed *dt;
-
-	if ( kbd.IsPress() && kbd.GetCode() == VK_LEFT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x - 1] == false)
+	rotCounter += speed *dt;
+	if ( kbd.IsPress() && kbd.GetCode() == VK_LEFT && counter >= inputCD && tileFull[loc[currentPiece].y][GetMostLeft()-1] == false)
 	{
 		loc[currentPiece].x -= 1;
 		counter = 0.0f;	
@@ -23,7 +23,7 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 		loc[currentPiece].y += 1;
 		counter = 0.0f;
 	}
-	if (kbd.IsPress() && kbd.GetCode() == VK_UP && counter >= inputCD)
+	if (kbd.IsPress() && kbd.GetCode() == VK_UP && rotCounter >= rotCD)
 	{
 		if (rotated[currentPiece] == false)
 		{
@@ -79,7 +79,6 @@ void Block::SpawnPiece(Board& brd, int randpiece)
 		LineFillTiles();
 		break;
 	}
-	
 	currentPiece++;
 	loc[currentPiece].x = spawnloc.x;
 	loc[currentPiece].y = spawnloc.y;
@@ -188,15 +187,15 @@ void Block::DrawNextPiece(Board & brd)
 
 void Block::BindPiece(float dt)
 {
-	if (loc[currentPiece].x <= 7)
+	if (loc[currentPiece].x - GetMostLeft() <= boardLeft)
 	{
-		loc[currentPiece].x = 7;
+		loc[currentPiece].x = boardLeft + GetMostLeft();
 	}
-	if (loc[currentPiece].x >= 26)
+	if (loc[currentPiece].x + GetMostRight() >= boardRight)
 	{
-		loc[currentPiece].x = 26;
+		loc[currentPiece].x = boardRight-GetMostRight();
 	}
-	if (loc[currentPiece].y >= 27)
+	if (loc[currentPiece].y >= boardBottom)
 	{
 		switch (pieceType[currentPiece])
 		{
@@ -303,6 +302,60 @@ void Block::LineFillTiles()
 		tileFull[loc[currentPiece].y-3][loc[currentPiece].x] = true;
 	}
 }
+
+int Block::GetMostLeft()
+{
+	switch (pieceType[currentPiece])
+	{
+	case cube:
+		return 0;
+		break;
+	case line:
+		if (rotated[currentPiece])
+		{
+			return 0;
+			break;
+		}
+		else if (!rotated[currentPiece])
+		{
+			return 0;
+			break;
+		}		
+	}
+}
+
+int Block::GetMostRight()
+{
+	switch (pieceType[currentPiece])
+	{
+	case cube:
+		return 0;
+		break;
+	case line:
+		if (rotated[currentPiece])
+		{
+			return 0;
+			break;
+		}
+		else if (!rotated[currentPiece])
+		{
+			return 3;
+			break;
+		}
+	}
+}
+
+void Block::SetMostLeft(int left)
+{
+	loc[currentPiece].x = left;
+}
+
+void Block::SetMostRight(int right)
+{
+	loc[currentPiece].x = right;
+}
+
+
 
 Block::Block(Board& brd)
 	:
