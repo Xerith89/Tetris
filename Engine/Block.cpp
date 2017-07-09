@@ -2,60 +2,55 @@
 
 
 
-void Block::TakeInput(Keyboard & kbd, float dt)
+void Block::TakeInput(Keyboard::Event & kbd, float dt)
 {
 	counter += speed * dt;
 	downCounter += speed *dt;
-	rotcounter += speed*dt;
-	if (kbd.KeyIsPressed(VK_LEFT) && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x - 1] == false ||
-		kbd.KeyIsPressed(VK_LEFT) && counter >= inputCD && tileFull[loc[currentPiece].y+1][loc[currentPiece].x - 1] == false)
+
+	if ( kbd.IsPress() && kbd.GetCode() == VK_LEFT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x - 1] == false)
 	{
 		loc[currentPiece].x -= 1;
 		counter = 0.0f;	
 	}
 		
-	if (kbd.KeyIsPressed(VK_RIGHT) && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] == false || 
-		kbd.KeyIsPressed(VK_RIGHT) && counter >= inputCD && tileFull[loc[currentPiece].y+1][loc[currentPiece].x + 1] == false)
+	if (kbd.IsPress() && kbd.GetCode() == VK_RIGHT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] == false)
 	{
 		loc[currentPiece].x += 1;
 		counter = 0.0f;
 	}
-	if (kbd.KeyIsPressed(VK_DOWN) && counter >= inputCD )
+	if (kbd.IsPress() && kbd.GetCode() == VK_DOWN && counter >= inputCD )
 	{
 		loc[currentPiece].y += 1;
 		counter = 0.0f;
 	}
-	if (kbd.KeyIsPressed(VK_RETURN) && rotcounter >= rotCD)
-	{
-		rotcounter = 0.0f;
-	}
+	
 	//////////////////////////////////////////////////////////////////
 	//						test code
-	if (kbd.KeyIsPressed(VK_F1))
+	if (kbd.IsPress() && kbd.GetCode() == VK_F1)
 	{
 		nextPiece = cube;
 	}
-	if (kbd.KeyIsPressed(VK_F2))
+	if (kbd.IsPress() && kbd.GetCode() == VK_F2)
 	{
 		nextPiece = line;
 	}
-	if (kbd.KeyIsPressed(VK_F3))
+	if (kbd.IsPress() && kbd.GetCode() == VK_F3)
 	{
 		nextPiece = t;
 	}
-	if (kbd.KeyIsPressed(VK_F4))
+	if (kbd.IsPress() && kbd.GetCode() == VK_F4)
 	{
 		nextPiece = z;
 	}
-	if (kbd.KeyIsPressed(VK_F5))
+	if (kbd.IsPress() && kbd.GetCode() == VK_F5)
 	{
 		nextPiece = two;
 	}
-	if (kbd.KeyIsPressed(VK_F6))
+	if (kbd.IsPress() && kbd.GetCode() == VK_F6)
 	{
 		nextPiece = leftl;
 	}
-	if (kbd.KeyIsPressed(VK_F7))
+	if (kbd.IsPress() && kbd.GetCode() == VK_F7)
 	{
 		nextPiece = rightl;
 	}
@@ -217,14 +212,12 @@ void Block::BindPiece(float dt)
 
 void Block::CubeCollision(Board& brd)
 {
-	Location bottomright;
-	Location bottomleft;
-	bottomleft.x = loc[currentPiece].x;
-	bottomleft.y = loc[currentPiece].y;
-	bottomright.x = loc[currentPiece].x + 1;
-	bottomright.y = loc[currentPiece].y;
 	
-	if (tileFull[bottomright.y+1][bottomright.x] || tileFull[bottomleft.y+1][bottomleft.x])
+	Location bottom;
+	bottom.x = loc[currentPiece].x;
+	bottom.y = loc[currentPiece].y;
+	
+	if ( tileFull[bottom.y+1][bottom.x])
 	{
 		SpawnPiece(brd, nextPiece);
 	}
@@ -254,9 +247,6 @@ void Block::LineCollision(Board & brd)
 void Block::CubeFillTiles()
 {
 	tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
-	tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] = true;
-	tileFull[loc[currentPiece].y-1][loc[currentPiece].x] = true;
-	tileFull[loc[currentPiece].y-1][loc[currentPiece].x + 1] = true;
 }
 
 void Block::LineFillTiles()

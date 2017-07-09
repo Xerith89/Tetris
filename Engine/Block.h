@@ -9,15 +9,14 @@ class Block
 private:
 	static constexpr int maxPieces = 100;
 	static constexpr int y = 28;
-	static constexpr int x = 20;
+	static constexpr int x = 27;
 	float speed = 4.0f;
 	Board& brd;
-	float inputCD = 5.0f;
+	float inputCD = 2.5f;
 	float downCD = 5.0f;
 	float counter = 0.0f;
 	float downCounter = 0.0f;
-	float rotCD = 3.0f;
-	float rotcounter = 0.0f;
+	bool rotated[maxPieces] = { false };
 	enum pieceType {
 		cube,
 		line,
@@ -29,7 +28,7 @@ private:
 	};
 	
 public:
-	void TakeInput(Keyboard& kbd, float dt);
+	void TakeInput(Keyboard::Event& kbd, float dt);
 	void SpawnPiece(Board& brd, int randpiece);
 	void DrawPiece(Board& brd);
 	void DrawNextPiece(Board& brd);

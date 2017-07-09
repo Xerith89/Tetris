@@ -45,7 +45,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
-	blck.TakeInput(wnd.kbd, dt);
+	blck.TakeInput(wnd.kbd.ReadKey(), dt);
 	blck.BindPiece(dt);
 	if (blck.canSpawn)
 	{
