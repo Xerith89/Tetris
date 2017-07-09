@@ -35,16 +35,19 @@ private:
 	int GetMostRight();
 	void SetMostLeft(int left);
 	void SetMostRight(int right);
+	void CheckLine();
+	void CubeCollision(Board& brd);
+	void LineCollision(Board& brd);
+	void CubeFillTiles();
+	void LineFillTiles();
+	void TFillLines();
+	void TCollision(Board& brd);
 public:
 	void TakeInput(Keyboard::Event& kbd, float dt);
 	void SpawnPiece(Board& brd, int randpiece);
 	void DrawPiece(Board& brd);
 	void DrawNextPiece(Board& brd);
 	void BindPiece(float dt);
-	void CubeCollision(Board& brd);
-	void LineCollision(Board& brd);
-	void CubeFillTiles();
-	void LineFillTiles();
 	Location nextBrick = { 33,23 };
 	Location spawnloc = { 20,18};
 	Location loc[maxPieces];
@@ -55,5 +58,6 @@ public:
 	bool canSpawn = false;
 	int nextPiece;
 	Block(Board& brd);
+	int lines = 0;
 };
 

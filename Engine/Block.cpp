@@ -13,7 +13,7 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 		counter = 0.0f;	
 	}
 		
-	if (kbd.IsPress() && kbd.GetCode() == VK_RIGHT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] == false)
+	if (kbd.IsPress() && kbd.GetCode() == VK_RIGHT && counter >= inputCD && tileFull[loc[currentPiece].y][GetMostRight() + 1] == false)
 	{
 		loc[currentPiece].x += 1;
 		counter = 0.0f;
@@ -78,7 +78,11 @@ void Block::SpawnPiece(Board& brd, int randpiece)
 	case line:
 		LineFillTiles();
 		break;
+	case t:
+		TFillLines();
+		break;
 	}
+	CheckLine();
 	currentPiece++;
 	loc[currentPiece].x = spawnloc.x;
 	loc[currentPiece].y = spawnloc.y;
@@ -205,6 +209,8 @@ void Block::BindPiece(float dt)
 		case line:
 			LineFillTiles();
 			break;
+		case t:
+			TFillLines();
 		}
 		SpawnPiece(brd, nextPiece);
 	}
@@ -222,11 +228,16 @@ void Block::BindPiece(float dt)
 	case line:
 		LineCollision(brd);
 		break;
+	case t:
+		TCollision(brd);
+		break;
 	}
 		
 
 }
 
+/////////////////////////////////////////////////////////////
+//				Collision Code
 void Block::CubeCollision(Board& brd)
 {
 	
@@ -280,6 +291,29 @@ void Block::LineCollision(Board & brd)
 	}
 }
 
+void Block::TCollision(Board & brd)
+{
+	Location left;
+	Location middle;
+	Location tee;
+	Location right;
+	left.x = loc[currentPiece].x -1;
+	left.y = loc[currentPiece].y-1;
+	middle.x = left.x+1;
+	middle.y = left.y;
+	right.x = middle.x + 1;
+	right.y = middle.y;
+	tee.x = loc[currentPiece].x;
+	tee.y = loc[currentPiece].y;
+
+	if (tileFull[tee.y + 1][tee.x] || tileFull[left.y + 1][left.x] || tileFull[right.y + 1][right.x])
+	{
+		SpawnPiece(brd, nextPiece);
+	}
+}
+
+/////////////////////////////////////////////////
+//			Set Tile Array
 void Block::CubeFillTiles()
 {
 	tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
@@ -303,6 +337,16 @@ void Block::LineFillTiles()
 	}
 }
 
+void Block::TFillLines()
+{
+	tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+	tileFull[loc[currentPiece].y - 1][loc[currentPiece].x-1] = true;
+	tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+	tileFull[loc[currentPiece].y - 1][loc[currentPiece].x+1] = true;
+}
+
+
+
 int Block::GetMostLeft()
 {
 	switch (pieceType[currentPiece])
@@ -320,7 +364,10 @@ int Block::GetMostLeft()
 		{
 			return 0;
 			break;
-		}		
+		}
+	case t:
+		return 1;
+		break;
 	}
 }
 
@@ -342,6 +389,9 @@ int Block::GetMostRight()
 			return 3;
 			break;
 		}
+	case t:
+		return 1;
+		break;
 	}
 }
 
@@ -355,7 +405,14 @@ void Block::SetMostRight(int right)
 	loc[currentPiece].x = right;
 }
 
-
+void Block::CheckLine()
+{
+	//if line is full
+	//stop drawing the cells in that line
+	//move everything down 1
+	//set cells above the top line to false
+	//add 1 to lines var
+}
 
 Block::Block(Board& brd)
 	:

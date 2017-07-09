@@ -9,6 +9,7 @@ void Board::DrawCell(Location & loc,Color c)const
 void Board::DrawCube(Location & loc)const
 {
 	DrawCell(loc, Colors::White);
+	SpriteCodex::DrawBlockWhite(loc.x*cellDimension, loc.y*cellDimension, gfx);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,6 +29,10 @@ void Board::DrawLineH(Location & loc)const
 	DrawCell(middleleft, Colors::Cyan);
 	DrawCell(middleright, Colors::Cyan);
 	DrawCell(right, Colors::Cyan);
+	SpriteCodex::DrawBlockAqua(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockAqua(middleleft.x*cellDimension, middleleft.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockAqua(middleright.x*cellDimension, middleright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockAqua(right.x*cellDimension, right.y*cellDimension, gfx);
 }
 
 void Board::DrawLineV(Location & loc) const
@@ -45,14 +50,29 @@ void Board::DrawLineV(Location & loc) const
 	DrawCell(middleleft, Colors::Cyan);
 	DrawCell(middleright, Colors::Cyan);
 	DrawCell(right, Colors::Cyan);
+	SpriteCodex::DrawBlockAqua(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockAqua(middleleft.x*cellDimension, middleleft.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockAqua(middleright.x*cellDimension, middleright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockAqua(right.x*cellDimension, right.y*cellDimension, gfx);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //												Draw T Code Red
 void Board::DrawTD(Location & loc) const
 {
-	
+	Location left;
+	Location middle;
+	Location right;
+	left.x = loc.x-1;
+	left.y = loc.y-1;
+	middle.x = loc.x;
+	middle.y = loc.y - 1;
+	right.x = loc.x+1;
+	right.y = loc.y - 1;
 	DrawCell(loc, Colors::Gray); 	
+	DrawCell(left, Colors::Gray);
+	DrawCell(middle, Colors::Gray);
+	DrawCell(right, Colors::Gray);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
