@@ -30,8 +30,8 @@ Game::Game( MainWindow& wnd )
 	blocksel(0,7)
 {
 	blck.loc[0] = { blck.spawnloc };
-	blck.nextPiece = 0;//blocksel(rng);
-	blck.pieceType[blck.currentPiece] = 0;//blocksel(rng);
+	blck.nextPiece = 1;//blocksel(rng);
+	blck.pieceType[blck.currentPiece] = 1;//blocksel(rng);
 }
 
 void Game::Go()

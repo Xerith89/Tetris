@@ -23,6 +23,17 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 		loc[currentPiece].y += 1;
 		counter = 0.0f;
 	}
+	if (kbd.IsPress() && kbd.GetCode() == VK_UP && counter >= inputCD)
+	{
+		if (rotated[currentPiece] == false)
+		{
+			rotated[currentPiece] = true;
+		}
+		else if (rotated[currentPiece])
+		{
+			rotated[currentPiece] = false;
+		}
+	}
 	
 	//////////////////////////////////////////////////////////////////
 	//						test code
@@ -118,7 +129,14 @@ void Block::DrawPiece(Board & brd)
 					brd.DrawCube(loc[i]);
 					break;
 				case line:
-					brd.DrawLineH(loc[i]);
+					if (rotated[i] == false)
+					{
+						brd.DrawLineH(loc[i]);
+					}
+					if (rotated[i])
+					{
+						brd.DrawLineV(loc[i]);
+					}
 					break;
 				case t:
 					brd.DrawTD(loc[i]);
@@ -229,18 +247,37 @@ void Block::LineCollision(Board & brd)
 	Location middleleft;
 	Location middleright;
 	Location right;
-	middleleft.x = loc[currentPiece].x + 1;
-	middleleft.y = loc[currentPiece].y;
-	middleright.x = middleleft.x + 1;
-	middleright.y = middleleft.y;
-	right.x = middleright.x + 1;
-	right.y = middleright.y;
-	left.x = loc[currentPiece].x;
-	left.y = loc[currentPiece].y;
-
-	if (tileFull[left.y + 1][left.x] || tileFull[middleleft.y + 1][middleleft.x] || tileFull[middleright.y + 1][middleright.x] || tileFull[right.y + 1][right.x])
+	if (!rotated[currentPiece])
 	{
-		SpawnPiece(brd, nextPiece);
+		middleleft.x = loc[currentPiece].x + 1;
+		middleleft.y = loc[currentPiece].y;
+		middleright.x = middleleft.x + 1;
+		middleright.y = middleleft.y;
+		right.x = middleright.x + 1;
+		right.y = middleright.y;
+		left.x = loc[currentPiece].x;
+		left.y = loc[currentPiece].y;
+
+		if (tileFull[left.y + 1][left.x] || tileFull[middleleft.y + 1][middleleft.x] || tileFull[middleright.y + 1][middleright.x] || tileFull[right.y + 1][right.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece])
+	{
+		middleleft.x = loc[currentPiece].x;
+		middleleft.y = loc[currentPiece].y-1;
+		middleright.x = middleleft.x;
+		middleright.y = middleleft.y-1;
+		right.x = middleright.x;
+		right.y = middleright.y-1;
+		left.x = loc[currentPiece].x;
+		left.y = loc[currentPiece].y;
+
+		if (tileFull[left.y + 1][left.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
 	}
 }
 
@@ -251,10 +288,20 @@ void Block::CubeFillTiles()
 
 void Block::LineFillTiles()
 {
-	tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
-	tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] = true;
-	tileFull[loc[currentPiece].y][loc[currentPiece].x + 2] = true;
-	tileFull[loc[currentPiece].y][loc[currentPiece].x + 3] = true;
+	if (!rotated[currentPiece])
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] = true;
+		tileFull[loc[currentPiece].y][loc[currentPiece].x + 2] = true;
+		tileFull[loc[currentPiece].y][loc[currentPiece].x + 3] = true;
+	}
+	else if (rotated[currentPiece])
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y-1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y-2][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y-3][loc[currentPiece].x] = true;
+	}
 }
 
 Block::Block(Board& brd)

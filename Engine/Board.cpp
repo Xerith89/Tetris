@@ -30,6 +30,23 @@ void Board::DrawLineH(Location & loc)const
 	DrawCell(right, Colors::Cyan);
 }
 
+void Board::DrawLineV(Location & loc) const
+{
+	Location middleleft;
+	Location middleright;
+	Location right;
+	middleleft.x = loc.x;
+	middleleft.y = loc.y-1;
+	middleright.x = middleleft.x;
+	middleright.y = middleleft.y-1;
+	right.x = middleright.x;
+	right.y = middleright.y-1;
+	DrawCell(loc, Colors::Cyan);
+	DrawCell(middleleft, Colors::Cyan);
+	DrawCell(middleright, Colors::Cyan);
+	DrawCell(right, Colors::Cyan);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //												Draw T Code Red
 void Board::DrawTD(Location & loc) const
