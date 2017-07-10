@@ -142,7 +142,22 @@ void Block::DrawPiece(Board & brd)
 					}
 					break;
 				case t:
-					brd.DrawTD(loc[i]);
+					if (rotated[i] == 0)
+					{
+						brd.DrawTD(loc[i]);
+					}
+					if (rotated[i] == 1)
+					{
+						brd.DrawTRotLeft(loc[i]);
+					}
+					if (rotated[i] == 2)
+					{
+						brd.DrawTRotUp(loc[i]);
+					}
+					if (rotated[i] == 3)
+					{
+						brd.DrawTRotRight(loc[i]);
+					}
 					break;
 				case z:
 					brd.DrawZH(loc[i]);

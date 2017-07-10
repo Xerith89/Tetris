@@ -75,6 +75,58 @@ void Board::DrawTD(Location & loc) const
 	DrawCell(right, Colors::Gray);
 }
 
+void Board::DrawTRotLeft(Location & loc) const
+{
+	Location tee;
+	Location middle;
+	Location top;
+	middle.x = loc.x;
+	middle.y = loc.y-1;
+	top.x = middle.x;
+	top.y = middle.y - 1;
+	tee.x = middle.x - 1;
+	tee.y = middle.y;
+	DrawCell(loc, Colors::Gray);
+	DrawCell(middle, Colors::Gray);
+	DrawCell(top, Colors::Gray);
+	DrawCell(tee, Colors::Gray);
+}
+
+void Board::DrawTRotUp(Location & loc) const
+{
+	Location tee;
+	Location middle;
+	Location right;
+	
+	middle.x = loc.x+1;
+	middle.y = loc.y;
+	right.x = middle.x + 1;
+	right.y = middle.y;
+	tee.x = middle.x;
+	tee.y = middle.y - 1;
+	DrawCell(loc, Colors::Gray);
+	DrawCell(tee, Colors::Gray);
+	DrawCell(middle, Colors::Gray);
+	DrawCell(right, Colors::Gray);
+}
+
+void Board::DrawTRotRight(Location & loc) const
+{
+	Location tee;
+	Location middle;
+	Location top;
+	middle.x = loc.x;
+	middle.y = loc.y-1;
+	top.x = middle.x;
+	top.y = middle.y - 1;
+	tee.x = middle.x + 1;
+	tee.y = middle.y;
+	DrawCell(loc, Colors::Gray);
+	DrawCell(middle, Colors::Gray);
+	DrawCell(top, Colors::Gray);
+	DrawCell(tee, Colors::Gray);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                         Draw Z Blocks Orange
 
