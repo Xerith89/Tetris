@@ -160,10 +160,24 @@ void Block::DrawPiece(Board & brd)
 					}
 					break;
 				case z:
-					brd.DrawZH(loc[i]);
+					if (rotated[i] == 0 || rotated[i] == 2)
+					{
+						brd.DrawZH(loc[i]);
+					}
+					if (rotated[i] == 1 || rotated[i] == 3)
+					{
+						brd.DrawZV(loc[i]);
+					}
 					break;
 				case two:
-					brd.Draw2H(loc[i]);
+					if (rotated[i] == 0 || rotated[i] == 2)
+					{
+						brd.Draw2H(loc[i]);
+					}
+					if (rotated[i] == 1 || rotated[i] == 3)
+					{
+						brd.Draw2V(loc[i]);
+					}
 					break;
 				case leftl:
 					brd.DrawLLL(loc[i]);

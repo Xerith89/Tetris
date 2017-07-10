@@ -20,7 +20,9 @@ public:
 	void DrawTRotUp(Location& loc)const;
 	void DrawTRotRight(Location& loc)const;
 	void DrawZH(Location& loc)const;
+	void DrawZV(Location& loc)const;
 	void Draw2H(Location& loc)const;
+	void Draw2V(Location& loc)const;
 	void DrawLLL(Location& loc)const;
 	void DrawRLR(Location& loc)const;
 	void DrawWall();

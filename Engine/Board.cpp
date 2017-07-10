@@ -115,8 +115,7 @@ void Board::DrawTRotRight(Location & loc) const
 	Location tee;
 	Location middle;
 	Location top;
-	middle.x = loc.x;
-	middle.y = loc.y-1;
+	middle = { loc.x,loc.y - 1 };
 	top.x = middle.x;
 	top.y = middle.y - 1;
 	tee.x = middle.x + 1;
@@ -132,29 +131,94 @@ void Board::DrawTRotRight(Location & loc) const
 
 void Board::DrawZH(Location & loc) const
 {
-	DrawCell(loc, Colors::Yellow);
+	Location bottomright;
+	Location topleft;
+	Location topright;
+	bottomright = { loc.x + 1,loc.y };
+	topright = { loc.x,loc.y-1 };
+	topleft = { topright.x - 1,topright.y };
+	DrawCell(loc, Colors::Green);
+	DrawCell(bottomright, Colors::Green);
+	DrawCell(topleft, Colors::Green);
+	DrawCell(topright, Colors::Green);
 	
+}
+
+void Board::DrawZV(Location & loc) const
+{
+	Location bottommiddle;
+	Location topmiddle;
+	Location top;
+	bottommiddle = { loc.x,loc.y - 1 };
+	topmiddle = { bottommiddle.x + 1,bottommiddle.y };
+	top = { topmiddle.x,topmiddle.y-1 };
+	DrawCell(loc, Colors::Green);
+	DrawCell(bottommiddle, Colors::Green);
+	DrawCell(topmiddle, Colors::Green);
+	DrawCell(top, Colors::Green);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //														Draw 2 Blocks
 void Board::Draw2H(Location & loc) const
 {
-	DrawCell(loc, Colors::Green);
+	Location bottomright;
+	Location topleft;
+	Location topright;
+	bottomright = { loc.x + 1,loc.y };
+	topleft = { bottomright.x,bottomright.y - 1 };
+	topright = { topleft.x + 1,topleft.y };
+	DrawCell(loc, Colors::Yellow);
+	DrawCell(bottomright, Colors::Yellow);
+	DrawCell(topleft, Colors::Yellow);
+	DrawCell(topright, Colors::Yellow);
 	
+}
+void Board::Draw2V(Location & loc) const
+{
+	Location bottommiddle;
+	Location topmiddle;
+	Location top;
+	bottommiddle = { loc.x,loc.y-1 };
+	topmiddle = { bottommiddle.x-1,bottommiddle.y };
+	top = { topmiddle.x,topmiddle.y-1 };
+	DrawCell(loc, Colors::Yellow);
+	DrawCell(bottommiddle, Colors::Yellow);
+	DrawCell(topmiddle, Colors::Yellow);
+	DrawCell(top, Colors::Yellow);
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                      Draw Left Side L Blocks
 void Board::DrawLLL(Location & loc) const
 {
+	Location bottomleft;
+	Location bottommiddle;
+	Location topmiddle;
+	Location top;
+	bottomleft = { loc.x-1,loc.y };
+	bottommiddle = { loc.x,loc.y-1 };
+	top = { bottommiddle.x,bottommiddle.y - 1 };
 	DrawCell(loc, Colors::Red);
-	
+	DrawCell(bottomleft, Colors::Red);
+	DrawCell(bottommiddle, Colors::Red);
+	DrawCell(top, Colors::Red);
 }
 /////////////////////////////////////////////////////////////////////////
 //									Draw Right Side L Blocks
 void Board::DrawRLR(Location & loc) const
 {
+	Location bottomright;
+	Location bottommiddle;
+	Location topmiddle;
+	Location top;
+	bottomright = { loc.x + 1,loc.y };
+	bottommiddle = { loc.x,loc.y - 1 };
+	top = { bottommiddle.x,bottommiddle.y - 1 };
 	DrawCell(loc, Colors::Blue);
+	DrawCell(bottomright, Colors::Blue);
+	DrawCell(bottommiddle, Colors::Blue);
+	DrawCell(top, Colors::Blue);
+	
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
