@@ -20,7 +20,6 @@ public:
 	void Draw2H(Location& loc)const;
 	void DrawLLL(Location& loc)const;
 	void DrawRLR(Location& loc)const;
-	void DrawBlankLine(Location& loc)const;
 	void DrawWall();
 	Board(Graphics &gfx);
 };

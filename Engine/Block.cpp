@@ -25,13 +25,13 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 	}
 	if (kbd.IsPress() && kbd.GetCode() == VK_UP && rotCounter >= rotCD)
 	{
-		if (rotated[currentPiece] == false)
+		if (rotated[currentPiece] <3)
 		{
-			rotated[currentPiece] = true;
+			rotated[currentPiece]++;
 		}
-		else if (rotated[currentPiece])
+		else if (rotated[currentPiece] >= 3)
 		{
-			rotated[currentPiece] = false;
+			rotated[currentPiece] = 0;
 		}
 	}
 	
@@ -132,11 +132,11 @@ void Block::DrawPiece(Board & brd)
 					brd.DrawCube(loc[i]);
 					break;
 				case line:
-					if (rotated[i] == false)
+					if (rotated[i] == 0 || rotated[i] == 2)
 					{
 						brd.DrawLineH(loc[i]);
 					}
-					if (rotated[i])
+					if (rotated[i] == 1 || rotated[i] == 3)
 					{
 						brd.DrawLineV(loc[i]);
 					}
@@ -187,6 +187,7 @@ void Block::DrawNextPiece(Board & brd)
 		brd.DrawRLR(nextBrick);
 		break;
 	}
+	
 }
 
 void Block::BindPiece(float dt)
@@ -257,7 +258,7 @@ void Block::LineCollision(Board & brd)
 	Location middleleft;
 	Location middleright;
 	Location right;
-	if (!rotated[currentPiece])
+	if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
 	{
 		middleleft.x = loc[currentPiece].x + 1;
 		middleleft.y = loc[currentPiece].y;
@@ -273,7 +274,7 @@ void Block::LineCollision(Board & brd)
 			SpawnPiece(brd, nextPiece);
 		}
 	}
-	else if (rotated[currentPiece])
+	else if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3 )
 	{
 		middleleft.x = loc[currentPiece].x;
 		middleleft.y = loc[currentPiece].y-1;
@@ -321,14 +322,14 @@ void Block::CubeFillTiles()
 
 void Block::LineFillTiles()
 {
-	if (!rotated[currentPiece])
+	if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
 	{
 		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
 		tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] = true;
 		tileFull[loc[currentPiece].y][loc[currentPiece].x + 2] = true;
 		tileFull[loc[currentPiece].y][loc[currentPiece].x + 3] = true;
 	}
-	else if (rotated[currentPiece])
+	else if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
 	{
 		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
 		tileFull[loc[currentPiece].y-1][loc[currentPiece].x] = true;
@@ -355,12 +356,12 @@ int Block::GetMostLeft()
 		return 0;
 		break;
 	case line:
-		if (rotated[currentPiece])
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
 		{
 			return 0;
 			break;
 		}
-		else if (!rotated[currentPiece])
+		else if (rotated[currentPiece] == 0 || rotated[currentPiece] == 3)
 		{
 			return 0;
 			break;
@@ -379,12 +380,12 @@ int Block::GetMostRight()
 		return 0;
 		break;
 	case line:
-		if (rotated[currentPiece])
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
 		{
 			return 0;
 			break;
 		}
-		else if (!rotated[currentPiece])
+		else if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
 		{
 			return 3;
 			break;
@@ -407,16 +408,7 @@ void Block::SetMostRight(int right)
 
 void Block::CheckLine()
 {
-		if (tileFull[loc[currentPiece].y][7] && tileFull[loc[currentPiece].y][8] && tileFull[loc[currentPiece].y][9] &&
-			tileFull[loc[currentPiece].y][10] && tileFull[loc[currentPiece].y][11] && tileFull[loc[currentPiece].y][12] &&
-			tileFull[loc[currentPiece].y][13] && tileFull[loc[currentPiece].y][14] && tileFull[loc[currentPiece].y][15] &&
-			tileFull[loc[currentPiece].y][16] && tileFull[loc[currentPiece].y][17] && tileFull[loc[currentPiece].y][18] &&
-			tileFull[loc[currentPiece].y][19] && tileFull[loc[currentPiece].y][20] && tileFull[loc[currentPiece].y][21] &&
-			tileFull[loc[currentPiece].y][22] && tileFull[loc[currentPiece].y][23] && tileFull[loc[currentPiece].y][24] &&
-			tileFull[loc[currentPiece].y][25] && tileFull[loc[currentPiece].y][26] && tileFull[loc[currentPiece].y][27])
-		{
-			lines = 1;
-		}
+	
 }
 
 Block::Block(Board& brd)

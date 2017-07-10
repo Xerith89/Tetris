@@ -21,7 +21,7 @@ private:
 	float counter = 0.0f;
 	float downCounter = 0.0f;
 	float rotCounter = 0.0f;
-	bool rotated[maxPieces] = { false };
+	int rotated[maxPieces] = { 0 };
 	enum pieceType {
 		cube,
 		line,
@@ -42,6 +42,7 @@ private:
 	void LineFillTiles();
 	void TFillLines();
 	void TCollision(Board& brd);
+	bool fullRow = false;
 public:
 	void TakeInput(Keyboard::Event& kbd, float dt);
 	void SpawnPiece(Board& brd, int randpiece);
