@@ -73,6 +73,10 @@ void Board::DrawTD(Location & loc) const
 	DrawCell(left, Colors::Gray);
 	DrawCell(middle, Colors::Gray);
 	DrawCell(right, Colors::Gray);
+	SpriteCodex::DrawBlockBrown(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(left.x*cellDimension, left.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(middle.x*cellDimension, middle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(right.x*cellDimension, right.y*cellDimension, gfx);
 }
 
 void Board::DrawTRotLeft(Location & loc) const
@@ -90,6 +94,10 @@ void Board::DrawTRotLeft(Location & loc) const
 	DrawCell(middle, Colors::Gray);
 	DrawCell(top, Colors::Gray);
 	DrawCell(tee, Colors::Gray);
+	SpriteCodex::DrawBlockBrown(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(top.x*cellDimension, top.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(middle.x*cellDimension, middle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(tee.x*cellDimension, tee.y*cellDimension, gfx);
 }
 
 void Board::DrawTRotUp(Location & loc) const
@@ -108,6 +116,10 @@ void Board::DrawTRotUp(Location & loc) const
 	DrawCell(tee, Colors::Gray);
 	DrawCell(middle, Colors::Gray);
 	DrawCell(right, Colors::Gray);
+	SpriteCodex::DrawBlockBrown(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(right.x*cellDimension, right.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(middle.x*cellDimension, middle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(tee.x*cellDimension, tee.y*cellDimension, gfx);
 }
 
 void Board::DrawTRotRight(Location & loc) const
@@ -124,6 +136,10 @@ void Board::DrawTRotRight(Location & loc) const
 	DrawCell(middle, Colors::Gray);
 	DrawCell(top, Colors::Gray);
 	DrawCell(tee, Colors::Gray);
+	SpriteCodex::DrawBlockBrown(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(top.x*cellDimension, top.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(middle.x*cellDimension, middle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockBrown(tee.x*cellDimension, tee.y*cellDimension, gfx);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,7 +157,10 @@ void Board::DrawZH(Location & loc) const
 	DrawCell(bottomright, Colors::Green);
 	DrawCell(topleft, Colors::Green);
 	DrawCell(topright, Colors::Green);
-	
+	SpriteCodex::DrawBlockGreen(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockGreen(bottomright.x*cellDimension, bottomright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockGreen(topright.x*cellDimension, topright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockGreen(topleft.x*cellDimension, topleft.y*cellDimension, gfx);
 }
 
 void Board::DrawZV(Location & loc) const
@@ -156,6 +175,10 @@ void Board::DrawZV(Location & loc) const
 	DrawCell(bottommiddle, Colors::Green);
 	DrawCell(topmiddle, Colors::Green);
 	DrawCell(top, Colors::Green);
+	SpriteCodex::DrawBlockGreen(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockGreen(bottommiddle.x*cellDimension, bottommiddle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockGreen(topmiddle.x*cellDimension, topmiddle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockGreen(top.x*cellDimension, top.y*cellDimension, gfx);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,6 +195,10 @@ void Board::Draw2H(Location & loc) const
 	DrawCell(bottomright, Colors::Yellow);
 	DrawCell(topleft, Colors::Yellow);
 	DrawCell(topright, Colors::Yellow);
+	SpriteCodex::DrawBlockYellow(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockYellow(topleft.x*cellDimension, topleft.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockYellow(topright.x*cellDimension, topright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockYellow(bottomright.x*cellDimension, bottomright.y*cellDimension, gfx);
 	
 }
 void Board::Draw2V(Location & loc) const
@@ -186,6 +213,10 @@ void Board::Draw2V(Location & loc) const
 	DrawCell(bottommiddle, Colors::Yellow);
 	DrawCell(topmiddle, Colors::Yellow);
 	DrawCell(top, Colors::Yellow);
+	SpriteCodex::DrawBlockYellow(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockYellow(top.x*cellDimension, top.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockYellow(topmiddle.x*cellDimension, topmiddle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockYellow(bottommiddle.x*cellDimension, bottommiddle.y*cellDimension, gfx);
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                      Draw Left Side L Blocks
@@ -193,7 +224,6 @@ void Board::DrawLLL(Location & loc) const
 {
 	Location bottomleft;
 	Location bottommiddle;
-	Location topmiddle;
 	Location top;
 	bottomleft = { loc.x-1,loc.y };
 	bottommiddle = { loc.x,loc.y-1 };
@@ -202,6 +232,61 @@ void Board::DrawLLL(Location & loc) const
 	DrawCell(bottomleft, Colors::Red);
 	DrawCell(bottommiddle, Colors::Red);
 	DrawCell(top, Colors::Red);
+	SpriteCodex::DrawBlockRed(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(bottomleft.x*cellDimension, bottomleft.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(bottommiddle.x*cellDimension, bottommiddle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(top.x*cellDimension, top.y*cellDimension, gfx);
+}
+void Board::DrawLLRotL(Location & loc) const
+{
+	Location bottomright;
+	Location bottommiddle;
+	Location top;
+	bottomright = { loc.x+2,loc.y };
+	bottommiddle = { loc.x+1,loc.y };
+	top = { bottommiddle.x-1,bottommiddle.y - 1 };
+	DrawCell(loc, Colors::Red);
+	DrawCell(bottomright, Colors::Red);
+	DrawCell(bottommiddle, Colors::Red);
+	DrawCell(top, Colors::Red);
+	SpriteCodex::DrawBlockRed(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(bottomright.x*cellDimension, bottomright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(bottommiddle.x*cellDimension, bottommiddle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(top.x*cellDimension, top.y*cellDimension, gfx);
+}
+void Board::DrawLLRotUp(Location & loc) const
+{
+	Location topright;
+	Location middle;
+	Location top;
+	middle = { loc.x,loc.y-1 };
+	top = { middle.x,middle.y - 1 };
+	topright = { top.x + 1,top.y };
+	DrawCell(loc, Colors::Red);
+	DrawCell(topright, Colors::Red);
+	DrawCell(middle, Colors::Red);
+	DrawCell(top, Colors::Red);
+	SpriteCodex::DrawBlockRed(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(topright.x*cellDimension, topright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(middle.x*cellDimension, middle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(top.x*cellDimension, top.y*cellDimension, gfx);
+}
+void Board::DrawLLRotRight(Location & loc) const
+{
+	Location topright;
+	Location middle;
+	Location top;
+	topright = { loc.x,loc.y - 1 };
+	middle = { topright.x-1,topright.y };
+	top = { middle.x-1,middle.y};
+	DrawCell(loc, Colors::Red);
+	DrawCell(topright, Colors::Red);
+	DrawCell(middle, Colors::Red);
+	DrawCell(top, Colors::Red);
+	SpriteCodex::DrawBlockRed(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(topright.x*cellDimension, topright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(middle.x*cellDimension, middle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(top.x*cellDimension, top.y*cellDimension, gfx);
 }
 /////////////////////////////////////////////////////////////////////////
 //									Draw Right Side L Blocks
@@ -209,7 +294,6 @@ void Board::DrawRLR(Location & loc) const
 {
 	Location bottomright;
 	Location bottommiddle;
-	Location topmiddle;
 	Location top;
 	bottomright = { loc.x + 1,loc.y };
 	bottommiddle = { loc.x,loc.y - 1 };
@@ -218,7 +302,64 @@ void Board::DrawRLR(Location & loc) const
 	DrawCell(bottomright, Colors::Blue);
 	DrawCell(bottommiddle, Colors::Blue);
 	DrawCell(top, Colors::Blue);
-	
+	SpriteCodex::DrawBlockOrange(bottomright.x*cellDimension, bottomright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(bottommiddle.x*cellDimension, bottommiddle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(top.x*cellDimension, top.y*cellDimension, gfx);
+}
+
+void Board::DrawRLRotL(Location & loc) const
+{
+	Location bottomright;
+	Location bottommiddle;
+	Location top;
+	bottomright = { loc.x,loc.y-1 };
+	bottommiddle = { bottomright.x + 1,bottomright.y };
+	top = { bottommiddle.x+1,bottommiddle.y };
+	DrawCell(loc, Colors::Blue);
+	DrawCell(bottomright, Colors::Blue);
+	DrawCell(bottommiddle, Colors::Blue);
+	DrawCell(top, Colors::Blue);
+	SpriteCodex::DrawBlockOrange(bottomright.x*cellDimension, bottomright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(bottommiddle.x*cellDimension, bottommiddle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(top.x*cellDimension, top.y*cellDimension, gfx);
+}
+
+void Board::DrawRLRotUp(Location & loc) const
+{
+	Location bottomright;
+	Location bottommiddle;
+	Location top;
+	bottomright = { loc.x,loc.y - 1 };
+	bottommiddle = { bottomright.x,bottomright.y-1 };
+	top = { bottommiddle.x -1,bottommiddle.y };
+	DrawCell(loc, Colors::Blue);
+	DrawCell(bottomright, Colors::Blue);
+	DrawCell(bottommiddle, Colors::Blue);
+	DrawCell(top, Colors::Blue);
+	SpriteCodex::DrawBlockOrange(bottomright.x*cellDimension, bottomright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(bottommiddle.x*cellDimension, bottommiddle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(top.x*cellDimension, top.y*cellDimension, gfx);
+}
+
+void Board::DrawRLRotRight(Location & loc) const
+{
+	Location bottomright;
+	Location bottommiddle;
+	Location top;
+	bottomright = { loc.x+1,loc.y };
+	bottommiddle = { bottomright.x+1,bottomright.y};
+	top = { bottommiddle.x,bottommiddle.y-1 };
+	DrawCell(loc, Colors::Blue);
+	DrawCell(bottomright, Colors::Blue);
+	DrawCell(bottommiddle, Colors::Blue);
+	DrawCell(top, Colors::Blue);
+	SpriteCodex::DrawBlockOrange(bottomright.x*cellDimension, bottomright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(bottommiddle.x*cellDimension, bottommiddle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockOrange(top.x*cellDimension, top.y*cellDimension, gfx);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -269,6 +410,22 @@ void Board::DrawWall()
 	}
 	SpriteCodex::DrawLinesText(cellDimension * 29, cellDimension * 12, gfx);
 	SpriteCodex::DrawNextText(cellDimension * 29, cellDimension * 19, gfx);
+	
+	for (int j = 0; j < 30; j++)
+	{
+		for (int i = 0; i <= 6; i++)
+		{
+			SpriteCodex::DrawBlockWall(cellDimension*i, cellDimension*j, gfx);
+		}
+	}
+
+	for (int j = 0; j < 10; j++)
+	{
+		for (int i = 28; i <= 38; i++)
+		{
+			SpriteCodex::DrawBlockWall(cellDimension*i, cellDimension*j, gfx);
+		}
+	}
 }
 
 

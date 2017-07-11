@@ -41,7 +41,15 @@ private:
 	void CubeFillTiles();
 	void LineFillTiles();
 	void TFillLines();
+	void ZFillTiles();
+	void TwoFillTiles();
+	void LLFillTiles();
+	void RLFillTiles();
 	void TCollision(Board& brd);
+	void ZCollision(Board& brd);
+	void TwoCollision(Board& brd);
+	void LLCollision(Board& brd);
+	void RLCollision(Board& brd);
 	bool fullRow = false;
 public:
 	void TakeInput(Keyboard::Event& kbd, float dt);
@@ -49,8 +57,8 @@ public:
 	void DrawPiece(Board& brd);
 	void DrawNextPiece(Board& brd);
 	void BindPiece(float dt);
-	Location nextBrick = { 33,23 };
-	Location spawnloc = { 20,18};
+	Location nextBrick = { 33,25 };
+	Location spawnloc = { 13,5};
 	Location loc[maxPieces];
 	bool tileFull[y][x] = { false };
 	bool canDraw[maxPieces] = { false };

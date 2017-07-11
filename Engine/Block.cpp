@@ -1,31 +1,29 @@
 #include "Block.h"
 
-
-
 void Block::TakeInput(Keyboard::Event & kbd, float dt)
 {
 	counter += speed * dt;
 	downCounter += speed *dt;
 	rotCounter += speed *dt;
-	if ( kbd.IsPress() && kbd.GetCode() == VK_LEFT && counter >= inputCD && tileFull[loc[currentPiece].y][GetMostLeft()-1] == false)
+	if (kbd.IsPress() && kbd.GetCode() == VK_LEFT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x] == false)
 	{
 		loc[currentPiece].x -= 1;
-		counter = 0.0f;	
+		counter = 0.0f;
 	}
-		
-	if (kbd.IsPress() && kbd.GetCode() == VK_RIGHT && counter >= inputCD && tileFull[loc[currentPiece].y][GetMostRight() + 1] == false)
+
+	if (kbd.IsPress() && kbd.GetCode() == VK_RIGHT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x] == false)
 	{
 		loc[currentPiece].x += 1;
 		counter = 0.0f;
 	}
-	if (kbd.IsPress() && kbd.GetCode() == VK_DOWN && counter >= inputCD )
+	if (kbd.IsPress() && kbd.GetCode() == VK_DOWN && counter >= inputCD)
 	{
 		loc[currentPiece].y += 1;
 		counter = 0.0f;
 	}
 	if (kbd.IsPress() && kbd.GetCode() == VK_UP && rotCounter >= rotCD)
 	{
-		if (rotated[currentPiece] <3)
+		if (rotated[currentPiece] < 3)
 		{
 			rotated[currentPiece]++;
 		}
@@ -34,42 +32,12 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 			rotated[currentPiece] = 0;
 		}
 	}
-	
-	//////////////////////////////////////////////////////////////////
-	//						test code
-	if (kbd.IsPress() && kbd.GetCode() == VK_F1)
-	{
-		nextPiece = cube;
-	}
-	if (kbd.IsPress() && kbd.GetCode() == VK_F2)
-	{
-		nextPiece = line;
-	}
-	if (kbd.IsPress() && kbd.GetCode() == VK_F3)
-	{
-		nextPiece = t;
-	}
-	if (kbd.IsPress() && kbd.GetCode() == VK_F4)
-	{
-		nextPiece = z;
-	}
-	if (kbd.IsPress() && kbd.GetCode() == VK_F5)
-	{
-		nextPiece = two;
-	}
-	if (kbd.IsPress() && kbd.GetCode() == VK_F6)
-	{
-		nextPiece = leftl;
-	}
-	if (kbd.IsPress() && kbd.GetCode() == VK_F7)
-	{
-		nextPiece = rightl;
-	}
 }
+	
 ////////////////////////////////////////////////////////////////////////
 void Block::SpawnPiece(Board& brd, int randpiece)
 {
-	canSpawn = false;
+	canSpawn = true;
 	switch (pieceType[currentPiece])
 	{
 	case cube:
@@ -80,6 +48,18 @@ void Block::SpawnPiece(Board& brd, int randpiece)
 		break;
 	case t:
 		TFillLines();
+		break;
+	case z:
+		ZFillTiles();
+		break;
+	case two:
+		TwoFillTiles();
+		break;
+	case leftl:
+		LLFillTiles();
+		break;
+	case rightl:
+		RLFillTiles();
 		break;
 	}
 	CheckLine();
@@ -180,10 +160,41 @@ void Block::DrawPiece(Board & brd)
 					}
 					break;
 				case leftl:
-					brd.DrawLLL(loc[i]);
+					if (rotated[i] == 0)
+					{
+						brd.DrawLLL(loc[i]);
+					}
+					if (rotated[i] == 1)
+					{
+						brd.DrawLLRotL(loc[i]);
+					}
+					if (rotated[i] == 2)
+					{
+						brd.DrawLLRotUp(loc[i]);
+					}
+					if (rotated[i] == 3)
+					{
+						brd.DrawLLRotRight(loc[i]);
+					}
+					
 					break;
 				case rightl:
-					brd.DrawRLR(loc[i]);
+					if (rotated[i] == 0)
+					{
+						brd.DrawRLR(loc[i]);
+					}
+					if (rotated[i] == 1)
+					{
+						brd.DrawRLRotL(loc[i]);
+					}
+					if (rotated[i] == 2)
+					{
+						brd.DrawRLRotUp(loc[i]);
+					}
+					if (rotated[i] == 3)
+					{
+						brd.DrawRLRotRight(loc[i]);
+					}
 					break;
 				}
 			}
@@ -241,6 +252,19 @@ void Block::BindPiece(float dt)
 			break;
 		case t:
 			TFillLines();
+			break;
+		case z:
+			ZFillTiles();
+			break;
+		case two:
+			TwoFillTiles();
+			break;
+		case leftl:
+			LLFillTiles();
+			break;
+		case rightl:
+			RLFillTiles();
+			break;
 		}
 		SpawnPiece(brd, nextPiece);
 	}
@@ -261,9 +285,19 @@ void Block::BindPiece(float dt)
 	case t:
 		TCollision(brd);
 		break;
+	case z:
+		ZCollision(brd);
+		break;
+	case two:
+		TwoCollision(brd);
+		break;
+	case leftl:
+		LLCollision(brd);
+		break;
+	case rightl:
+		RLCollision(brd);
+		break;
 	}
-		
-
 }
 
 /////////////////////////////////////////////////////////////
@@ -327,18 +361,291 @@ void Block::TCollision(Board & brd)
 	Location middle;
 	Location tee;
 	Location right;
-	left.x = loc[currentPiece].x -1;
-	left.y = loc[currentPiece].y-1;
-	middle.x = left.x+1;
-	middle.y = left.y;
-	right.x = middle.x + 1;
-	right.y = middle.y;
-	tee.x = loc[currentPiece].x;
-	tee.y = loc[currentPiece].y;
 
-	if (tileFull[tee.y + 1][tee.x] || tileFull[left.y + 1][left.x] || tileFull[right.y + 1][right.x])
+	if (rotated[currentPiece] == 0)
 	{
-		SpawnPiece(brd, nextPiece);
+		left.x = loc[currentPiece].x - 1;
+		left.y = loc[currentPiece].y - 1;
+		middle.x = left.x + 1;
+		middle.y = left.y;
+		right.x = middle.x + 1;
+		right.y = middle.y;
+		tee.x = loc[currentPiece].x;
+		tee.y = loc[currentPiece].y;
+
+		if (tileFull[tee.y + 1][tee.x] || tileFull[left.y + 1][left.x] || tileFull[right.y + 1][right.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece] == 1)
+	{
+		left.x = loc[currentPiece].x;
+		left.y = loc[currentPiece].y;
+		middle.x = left.x;
+		middle.y = left.y-1;
+		right.x = middle.x;
+		right.y = middle.y-1;
+		tee.x = loc[currentPiece].x-1;
+		tee.y = loc[currentPiece].y-1;
+		if (tileFull[tee.y + 1][tee.x] || tileFull[left.y + 1][left.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece] == 2)
+	{
+		left.x = loc[currentPiece].x;
+		left.y = loc[currentPiece].y;
+		middle.x = left.x + 1;
+		middle.y = left.y;
+		right.x = middle.x + 1;
+		right.y = middle.y;
+		tee.x = loc[currentPiece].x+1;
+		tee.y = loc[currentPiece].y-1;
+		if (tileFull[left.y + 1][left.x] || tileFull[middle.y + 1][middle.x] || tileFull[right.y + 1][right.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece] == 3)
+	{
+		left.x = loc[currentPiece].x;
+		left.y = loc[currentPiece].y;
+		middle.x = left.x;
+		middle.y = left.y-1;
+		right.x = middle.x;
+		right.y = middle.y-1;
+		tee.x = loc[currentPiece].x + 1;
+		tee.y = loc[currentPiece].y - 1;
+		if (tileFull[tee.y + 1][tee.x] || tileFull[left.y + 1][left.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+}
+
+void Block::ZCollision(Board & brd)
+{
+	Location origin;
+	Location bottomright;
+	Location topright;
+	Location topleft;
+	if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		bottomright.x = origin.x + 1;
+		bottomright.y = origin.y;
+		topright.x = origin.x;
+		topright.y = origin.y-1;
+		topleft.x = topright.x-1;
+		topleft.y = topright.y;
+
+		if (tileFull[origin.y + 1][origin.x] || tileFull[topleft.y + 1][topleft.x] || tileFull[bottomright.y + 1][bottomright.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		bottomright.x = origin.x;
+		bottomright.y = origin.y-1;
+		topright.x = origin.x+1;
+		topright.y = origin.y - 1;
+		topleft.x = topright.x;
+		topleft.y = topright.y-1;
+
+		if (tileFull[origin.y + 1][origin.x] || tileFull[topright.y + 1][topright.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+}
+
+void Block::TwoCollision(Board & brd)
+{
+	Location origin;
+	Location bottomright;
+	Location topright;
+	Location topleft;
+	if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		bottomright.x = origin.x + 1;
+		bottomright.y = origin.y;
+		topright.x = bottomright.x;
+		topright.y = bottomright.y - 1;
+		topleft.x = topright.x + 1;
+		topleft.y = topright.y;
+
+		if (tileFull[origin.y + 1][origin.x] || tileFull[topleft.y + 1][topleft.x] || tileFull[bottomright.y + 1][bottomright.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		bottomright.x = origin.x;
+		bottomright.y = origin.y - 1;
+		topright.x = origin.x -1;
+		topright.y = origin.y - 1;
+		topleft.x = topright.x -1;
+		topleft.y = topright.y ;
+
+		if (tileFull[origin.y + 1][origin.x] || tileFull[topright.y + 1][topright.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+}
+
+void Block::LLCollision(Board & brd)
+{
+	Location left;
+	Location middle;
+	Location origin;
+	Location right;
+
+	if (rotated[currentPiece] == 0)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		right.x = origin.x + 1;
+		right.y = origin.y;
+		middle.x = right.x;
+		middle.y = right.y-1;
+		left.x = middle.x;
+		left.y = middle.y - 1;
+
+		if (tileFull[origin.y + 1][origin.x] || tileFull[right.y + 1][right.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece] == 1)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		right.x = origin.x + 1;
+		right.y = origin.y;
+		middle.x = right.x+1;
+		middle.y = right.y;
+		left.x = origin.x;
+		left.y = origin.y - 1;
+
+		if (tileFull[origin.y + 1][origin.x] || tileFull[right.y + 1][right.x] || tileFull[middle.y + 1][middle.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece] == 2)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		right.x = origin.x;
+		right.y = origin.y-1;
+		middle.x = right.x;
+		middle.y = right.y-1;
+		left.x = middle.x+1;
+		left.y = middle.y;
+		if (tileFull[left.y + 1][left.x] || tileFull[origin.y + 1][origin.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece] == 3)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		right.x = origin.x;
+		right.y = origin.y - 1;
+		middle.x = right.x-1;
+		middle.y = right.y;
+		left.x = middle.x - 1;
+		left.y = middle.y;
+
+		if (tileFull[origin.y + 1][origin.x] || tileFull[left.y + 1][left.x] || tileFull[middle.y + 1][middle.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+}
+
+void Block::RLCollision(Board & brd)
+{
+	Location left;
+	Location middle;
+	Location origin;
+	Location right;
+
+	if (rotated[currentPiece] == 0)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		right.x = origin.x + 1;
+		right.y = origin.y;
+		middle.x = origin.x;
+		middle.y = origin.y - 1;
+		left.x = middle.x;
+		left.y = middle.y - 1;
+
+		if (tileFull[origin.y + 1][origin.x] || tileFull[right.y + 1][right.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece] == 1)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		left.x = origin.x;
+		left.y = origin.y - 1;
+		middle.x = left.x + 1;
+		middle.y = left.y;
+		right.x = middle.x + 1;
+		right.y = middle.y;
+	
+		if (tileFull[origin.y + 1][origin.x] || tileFull[right.y + 1][right.x] || tileFull[middle.y + 1][middle.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece] == 2)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		right.x = origin.x;
+		right.y = origin.y-1;
+		middle.x = right.x;
+		middle.y = right.y-1;
+		left.x = middle.x-1;
+		left.y = middle.y;
+		if (tileFull[left.y + 1][left.x] || tileFull[origin.y + 1][origin.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
+	}
+	else if (rotated[currentPiece] == 3)
+	{
+		origin.x = loc[currentPiece].x;
+		origin.y = loc[currentPiece].y;
+		right.x = origin.x+1;
+		right.y = origin.y;
+		middle.x = right.x+1;
+		middle.y = right.y;
+		left.x = middle.x;
+		left.y = middle.y-1;
+
+		if (tileFull[origin.y + 1][origin.x] || tileFull[right.y + 1][right.x] || tileFull[middle.y + 1][middle.x])
+		{
+			SpawnPiece(brd, nextPiece);
+		}
 	}
 }
 
@@ -369,13 +676,135 @@ void Block::LineFillTiles()
 
 void Block::TFillLines()
 {
-	tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
-	tileFull[loc[currentPiece].y - 1][loc[currentPiece].x-1] = true;
-	tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
-	tileFull[loc[currentPiece].y - 1][loc[currentPiece].x+1] = true;
+	if (rotated[currentPiece] == 0)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x - 1] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x + 1] = true;
+	}
+	if (rotated[currentPiece] == 1)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 2][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x - 1] = true;
+	}
+	if (rotated[currentPiece] == 2)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] = true;
+		tileFull[loc[currentPiece].y][loc[currentPiece].x + 2] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x + 1] = true;
+	}
+	if (rotated[currentPiece] == 3)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 2][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x + 1] = true;
+	}
 }
 
+void Block::ZFillTiles()
+{
+		if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+		{
+			tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+			tileFull[loc[currentPiece].y][loc[currentPiece].x+1] = true;
+			tileFull[loc[currentPiece].y -1][loc[currentPiece].x] = true;
+			tileFull[loc[currentPiece].y - 1][loc[currentPiece].x -1] = true;
+		}
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+		{
+			tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+			tileFull[loc[currentPiece].y-1][loc[currentPiece].x] = true;
+			tileFull[loc[currentPiece].y - 1][loc[currentPiece].x+1] = true;
+			tileFull[loc[currentPiece].y - 2][loc[currentPiece].x + 1] = true;
+		}
+}
 
+void Block::TwoFillTiles()
+{
+	if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y][loc[currentPiece].x+1] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x + 1] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x + 2] = true;
+	}
+	if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x - 1] = true;
+		tileFull[loc[currentPiece].y - 2][loc[currentPiece].x - 1] = true;
+	}
+}
+
+void Block::LLFillTiles()
+{
+	if (rotated[currentPiece] == 0)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y][loc[currentPiece].x+1] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x +1] = true;
+		tileFull[loc[currentPiece].y - 2][loc[currentPiece].x + 1] = true;
+	}
+	if (rotated[currentPiece] == 1)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y][loc[currentPiece].x + 1] = true;
+		tileFull[loc[currentPiece].y][loc[currentPiece].x +2] = true;
+	}
+	if (rotated[currentPiece] == 2)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 2][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 2][loc[currentPiece].x+ 1] = true;
+	}
+	if (rotated[currentPiece] == 3)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x - 1] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x - 2] = true;
+	}
+}
+
+void Block::RLFillTiles()
+{
+	if (rotated[currentPiece] == 0)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y][loc[currentPiece].x+1] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 2][loc[currentPiece].x] = true;
+	}
+	if (rotated[currentPiece] == 1)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x + 1] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x + 2] = true;
+	}
+	if (rotated[currentPiece] == 2)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 2][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 2][loc[currentPiece].x - 1] = true;
+	}
+	if (rotated[currentPiece] == 3)
+	{
+		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y ][loc[currentPiece].x+1] = true;
+		tileFull[loc[currentPiece].y ][loc[currentPiece].x +2] = true;
+		tileFull[loc[currentPiece].y -1][loc[currentPiece].x +2] = true;
+	}
+}
 
 int Block::GetMostLeft()
 {
@@ -396,7 +825,94 @@ int Block::GetMostLeft()
 			break;
 		}
 	case t:
-		return 1;
+		if (rotated[currentPiece] == 0)
+		{
+			return 1;
+			break;
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			return 1;
+			break;
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			return 0;
+			break;
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			return 0;
+			break;
+		}
+		break;
+	case z:
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+		{
+			return 0;
+			break;
+		}
+		else if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+		{
+			return 1;
+			break;
+		}
+		break;
+	case two:
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+		{
+			return 1;
+			break;
+		}
+		else if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+		{
+			return 0;
+			break;
+		}
+		break;
+	case leftl:
+		if (rotated[currentPiece] == 0)
+		{
+			return 1;
+			break;
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			return 0;
+			break;
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			return 0;
+			break;
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			return 2;
+			break;
+		}
+		break;
+	case rightl:
+		if (rotated[currentPiece] == 0)
+		{
+			return 0;
+			break;
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			return 0;
+			break;
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			return 1;
+			break;
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			return 0;
+			break;
+		}
 		break;
 	}
 }
@@ -420,7 +936,94 @@ int Block::GetMostRight()
 			break;
 		}
 	case t:
-		return 1;
+		if (rotated[currentPiece] == 0)
+		{
+			return 1;
+			break;
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			return 0;
+			break;
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			return 2;
+			break;
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			return 1;
+			break;
+		}
+		break;
+	case z:
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+		{
+			return 1;
+			break;
+		}
+		else if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+		{
+			return 1;
+			break;
+		}
+		break;
+	case two:
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+		{
+			return 1;
+			break;
+		}
+		else if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+		{
+			return 2;
+			break;
+		}
+		break;
+	case leftl:
+		if (rotated[currentPiece] == 0)
+		{
+			return 0;
+			break;
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			return 2;
+			break;
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			return 1;
+			break;
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			return 0;
+			break;
+		}
+		break;
+	case rightl:
+		if (rotated[currentPiece] == 0)
+		{
+			return 1;
+			break;
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			return 2;
+			break;
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			return 0;
+			break;
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			return 2;
+			break;
+		}
 		break;
 	}
 }

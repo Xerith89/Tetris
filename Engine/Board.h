@@ -24,7 +24,13 @@ public:
 	void Draw2H(Location& loc)const;
 	void Draw2V(Location& loc)const;
 	void DrawLLL(Location& loc)const;
+	void DrawLLRotL(Location& loc)const;
+	void DrawLLRotUp(Location& loc)const;
+	void DrawLLRotRight(Location& loc)const;
 	void DrawRLR(Location& loc)const;
+	void DrawRLRotL(Location& loc)const;
+	void DrawRLRotUp(Location& loc)const;
+	void DrawRLRotRight(Location& loc)const;
 	void DrawWall();
 	Board(Graphics &gfx);
 };

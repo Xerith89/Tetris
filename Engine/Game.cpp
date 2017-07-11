@@ -27,11 +27,11 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	brd(gfx),
 	blck(brd),
-	blocksel(0,7)
+	blocksel(0,6)
 {
 	blck.loc[0] = { blck.spawnloc };
-	blck.nextPiece = 3;//blocksel(rng);
-	blck.pieceType[blck.currentPiece] = 4;//blocksel(rng);
+	blck.nextPiece = blocksel(rng);
+	blck.pieceType[blck.currentPiece] = blocksel(rng);
 }
 
 void Game::Go()
@@ -49,7 +49,8 @@ void Game::UpdateModel()
 	blck.BindPiece(dt);
 	if (blck.canSpawn)
 	{
-		blck.SpawnPiece(brd, blocksel(rng));
+		blck.nextPiece = blocksel(rng);
+		blck.canSpawn = false;
 	}
 }
 
