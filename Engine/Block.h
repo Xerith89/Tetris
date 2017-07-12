@@ -9,9 +9,9 @@ class Block
 private:
 	static constexpr int maxPieces = 100;
 	static constexpr int y = 29;
-	static constexpr int x = 28;
+	static constexpr int x = 23;
 	static constexpr int boardLeft = 7;
-	static constexpr int boardRight = 27;
+	static constexpr int boardRight = 23;
 	static constexpr int boardBottom = 27;
 	float speed = 3.0f;
 	Board& brd;

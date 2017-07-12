@@ -26,6 +26,7 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	brd(gfx),
+	rng(rd()),
 	blck(brd),
 	blocksel(0,6)
 {

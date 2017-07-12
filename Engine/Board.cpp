@@ -371,10 +371,13 @@ void Board::DrawWall()
 	{
 		SpriteCodex::DrawBlockWall(cellDimension*6, 0+(cellDimension*i), gfx);
 	}
-	gfx.DrawRectDim(cellDimension * 28, 0, cellDimension, cellDimension * 30, Colors::Black); //Draw Right Wall
+	gfx.DrawRectDim(cellDimension * 24, 0, cellDimension, cellDimension * 30, Colors::Black); //Draw Right Wall
 	for (int i = 0; i < cellDimension + 10; i++)
 	{
-		SpriteCodex::DrawBlockWall(cellDimension * 28, 0 + (cellDimension*i), gfx);
+		for (int j = 24; j <= 28; j++)
+		{
+			SpriteCodex::DrawBlockWall(cellDimension * j, 0 + (cellDimension*i), gfx);
+		}
 	}
 	gfx.DrawRectDim(cellDimension *6, cellDimension*29, cellDimension*23, cellDimension, Colors::Black); //Draw Bottom Wall
 	for (int i = 6; i < 29; i++)
