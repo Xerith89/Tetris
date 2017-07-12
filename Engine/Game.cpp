@@ -45,20 +45,50 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
-	blck.TakeInput(wnd.kbd.ReadKey(), dt);
-	blck.BindPiece(dt);
-	if (blck.canSpawn)
+
+	switch (gamestate)
 	{
-		blck.nextPiece = blocksel(rng);
-		blck.canSpawn = false;
+	case splashscreen:
+		if (wnd.kbd.KeyIsPressed(VK_RETURN))
+		{
+			gamestate = playing;
+		}
+		break;
+	case playing:
+		blck.TakeInput(wnd.kbd.ReadKey(), dt);
+		blck.BindPiece(dt);
+		if (blck.canSpawn)
+		{
+			blck.nextPiece = blocksel(rng);
+			blck.canSpawn = false;
+		}
+		if (blck.isGameOver())
+		{
+			gamestate = gameover;
+		}
+		break;
 	}
+	
+	
 }
 
 void Game::ComposeFrame()
 {	
-	brd.DrawWall(); 
-	blck.DrawNextPiece(brd);
-	blck.DrawPiece(brd);
+	switch (gamestate)
+	{
+	case splashscreen:
+		SpriteCodex::DrawBlockAqua(300, 300, gfx);
+		break;
+	case playing:
+		brd.DrawWall();
+		blck.DrawNextPiece(brd);
+		blck.DrawPiece(brd);
+		break;
+	case gameover:
+		SpriteCodex::DrawGameOver(300, 250, gfx);
+		break;
+	}
+	
 }
 
 

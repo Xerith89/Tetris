@@ -13,10 +13,10 @@ private:
 	static constexpr int boardLeft = 7;
 	static constexpr int boardRight = 27;
 	static constexpr int boardBottom = 27;
-	float speed = 4.0f;
+	float speed = 3.0f;
 	Board& brd;
 	float inputCD = 2.5f;
-	float downCD = 5.0f;
+	float downCD = 2.5f;
 	float rotCD = 2.5f;
 	float counter = 0.0f;
 	float downCounter = 0.0f;
@@ -33,6 +33,7 @@ private:
 	};
 	int GetMostLeft();
 	int GetMostRight();
+	int GetPieceHeight();
 	void SetMostLeft(int left);
 	void SetMostRight(int right);
 	void CheckLine();
@@ -51,7 +52,9 @@ private:
 	void LLCollision(Board& brd);
 	void RLCollision(Board& brd);
 	bool fullRow = false;
+	void SpeedUp();
 public:
+	bool isGameOver();
 	void TakeInput(Keyboard::Event& kbd, float dt);
 	void SpawnPiece(Board& brd, int randpiece);
 	void DrawPiece(Board& brd);

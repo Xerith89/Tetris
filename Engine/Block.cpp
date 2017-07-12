@@ -649,6 +649,24 @@ void Block::RLCollision(Board & brd)
 	}
 }
 
+void Block::SpeedUp()
+{
+	speed = 3.0f+ (lines / 20);
+}
+
+bool Block::isGameOver()
+{
+	if (loc[currentPiece].y - 3 <=1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	
+}
+
 /////////////////////////////////////////////////
 //			Set Tile Array
 void Block::CubeFillTiles()
@@ -1028,6 +1046,11 @@ int Block::GetMostRight()
 	}
 }
 
+int Block::GetPieceHeight()
+{
+	return 0;
+}
+
 void Block::SetMostLeft(int left)
 {
 	loc[currentPiece].x = left;
@@ -1040,7 +1063,19 @@ void Block::SetMostRight(int right)
 
 void Block::CheckLine()
 {
-	
+	if (tileFull[loc[currentPiece].y][7] && tileFull[loc[currentPiece].y][8] && tileFull[loc[currentPiece].y][9] && tileFull[loc[currentPiece].y][10]
+		&& tileFull[loc[currentPiece].y][11] && tileFull[loc[currentPiece].y][12] && tileFull[loc[currentPiece].y][13] && tileFull[loc[currentPiece].y][14]
+		&& tileFull[loc[currentPiece].y][15] && tileFull[loc[currentPiece].y][16] && tileFull[loc[currentPiece].y][17] && tileFull[loc[currentPiece].y][18] &&
+		tileFull[loc[currentPiece].y][19] && tileFull[loc[currentPiece].y][20] && tileFull[loc[currentPiece].y][21] && tileFull[loc[currentPiece].y][22] &&
+		tileFull[loc[currentPiece].y][23] && tileFull[loc[currentPiece].y][24] && tileFull[loc[currentPiece].y][25] && tileFull[loc[currentPiece].y][26] && tileFull[loc[currentPiece].y][27])&&
+	{
+		//loop through the board array that is above loc.y -move everything down by 1 on y for the true/false array;
+		//move everything being drawn down 1
+		//loop through top row and insert a row in the top of the board setting everything to false
+		//make it so that drawing can only be down if y is lower than the bottom of board
+		lines++;
+		SpeedUp();
+	}
 }
 
 Block::Block(Board& brd)

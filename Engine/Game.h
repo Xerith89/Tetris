@@ -51,6 +51,12 @@ private:
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_int_distribution<int>blocksel;
+	int gamestate = 0;
+	enum GameState {
+		splashscreen,
+		playing,
+		gameover
+	};
 	/********************************/
 	/*  User Variables              */
 	/********************************/
