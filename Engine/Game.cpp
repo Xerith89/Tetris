@@ -77,7 +77,7 @@ void Game::ComposeFrame()
 	switch (gamestate)
 	{
 	case splashscreen:
-		SpriteCodex::DrawBlockAqua(300, 300, gfx);
+		SpriteCodex::DrawSplash(160, 250, gfx);
 		break;
 	case playing:
 		brd.DrawWall();

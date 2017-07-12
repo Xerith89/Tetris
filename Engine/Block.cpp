@@ -1067,7 +1067,7 @@ void Block::CheckLine()
 		&& tileFull[loc[currentPiece].y][11] && tileFull[loc[currentPiece].y][12] && tileFull[loc[currentPiece].y][13] && tileFull[loc[currentPiece].y][14]
 		&& tileFull[loc[currentPiece].y][15] && tileFull[loc[currentPiece].y][16] && tileFull[loc[currentPiece].y][17] && tileFull[loc[currentPiece].y][18] &&
 		tileFull[loc[currentPiece].y][19] && tileFull[loc[currentPiece].y][20] && tileFull[loc[currentPiece].y][21] && tileFull[loc[currentPiece].y][22] &&
-		tileFull[loc[currentPiece].y][23] && tileFull[loc[currentPiece].y][24] && tileFull[loc[currentPiece].y][25] && tileFull[loc[currentPiece].y][26] && tileFull[loc[currentPiece].y][27])&&
+		tileFull[loc[currentPiece].y][23] && tileFull[loc[currentPiece].y][24] && tileFull[loc[currentPiece].y][25] && tileFull[loc[currentPiece].y][26] && tileFull[loc[currentPiece].y][27])
 	{
 		//loop through the board array that is above loc.y -move everything down by 1 on y for the true/false array;
 		//move everything being drawn down 1

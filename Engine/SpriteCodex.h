@@ -6,6 +6,7 @@
 class SpriteCodex
 {
 public:
+	static void DrawSplash(int x, int y, Graphics& gfx);
 	static void DrawGameOver( int x,int y,Graphics& gfx );
 	static void DrawBlockYellow(int x, int y, Graphics& gfx);
 	static void DrawBlockWhite(int x, int y, Graphics& gfx);
