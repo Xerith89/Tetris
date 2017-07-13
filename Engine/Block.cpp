@@ -1048,7 +1048,113 @@ int Block::GetMostRight()
 
 int Block::GetPieceHeight()
 {
-	return 0;
+	switch (pieceType[currentPiece])
+	{
+	case cube:
+		return 0;
+		break;
+	case line:
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+		{
+			return 0;
+			break;
+		}
+		else if (rotated[currentPiece] == 0 || rotated[currentPiece] == 3)
+		{
+			return 3;
+			break;
+		}
+	case t:
+		if (rotated[currentPiece] == 0)
+		{
+			return 1;
+			break;
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			return 2;
+			break;
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			return 1;
+			break;
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			return 2;
+			break;
+		}
+		break;
+	case z:
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+		{
+			return 1;
+			break;
+		}
+		else if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+		{
+			return 2;
+			break;
+		}
+		break;
+	case two:
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+		{
+			return 1;
+			break;
+		}
+		else if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+		{
+			return 2;
+			break;
+		}
+		break;
+	case leftl:
+		if (rotated[currentPiece] == 0)
+		{
+			return 2;
+			break;
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			return 1;
+			break;
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			return 2;
+			break;
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			return 1;
+			break;
+		}
+		break;
+	case rightl:
+		if (rotated[currentPiece] == 0)
+		{
+			return 2;
+			break;
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			return 1;
+			break;
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			return 2;
+			break;
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			return 1;
+			break;
+		}
+		break;
+	}
 }
 
 void Block::SetMostLeft(int left)
@@ -1063,32 +1169,34 @@ void Block::SetMostRight(int right)
 
 void Block::CheckLine()
 {
-	if (tileFull[loc[currentPiece].y][7] && tileFull[loc[currentPiece].y][8] && tileFull[loc[currentPiece].y][9] && tileFull[loc[currentPiece].y][10] && tileFull[loc[currentPiece].y][11] && tileFull[loc[currentPiece].y][12] && tileFull[loc[currentPiece].y][13] && tileFull[loc[currentPiece].y][14] && tileFull[loc[currentPiece].y][15] && tileFull[loc[currentPiece].y][16] && tileFull[loc[currentPiece].y][17] && tileFull[loc[currentPiece].y][18] && tileFull[loc[currentPiece].y][19] && tileFull[loc[currentPiece].y][20])
+	for (int t = GetPieceHeight(); t >= 0; t--)
 	{
-		linecomplete = true;
-		for (int i = loc[currentPiece].y; i > 0; i--)
+		if (tileFull[loc[currentPiece].y + t][7] && tileFull[loc[currentPiece].y + t][8] && tileFull[loc[currentPiece].y+t][9] && tileFull[loc[currentPiece].y+t][10] && tileFull[loc[currentPiece].y+t][11] && tileFull[loc[currentPiece].y+t][12] && tileFull[loc[currentPiece].y+t][13] && tileFull[loc[currentPiece].y+t][14] && tileFull[loc[currentPiece].y+t][15] && tileFull[loc[currentPiece].y+t][16] && tileFull[loc[currentPiece].y+t][17] && tileFull[loc[currentPiece].y+t][18] && tileFull[loc[currentPiece].y+t][19] && tileFull[loc[currentPiece].y+t][20])
 		{
-			for (int j = 7; j <= 23; j++)
+			linecomplete = true;
+			for (int i = loc[currentPiece].y; i > 0; i--)
 			{
-				tileFull[i][j] = tileFull[i - 1][j];
+				for (int j = 7; j <= 23; j++)
+				{
+					tileFull[i][j] = tileFull[i - 1][j];
 				}
 			}
-		for (int z = 0; z <= maxPieces; z++)
-		{
-			if (loc[z].y <= loc[currentPiece].y)
+			for (int z = 0; z <= maxPieces; z++)
 			{
-				loc[z].y += 1;
+				if (loc[z].y <= loc[currentPiece].y)
+				{
+					loc[z].y += 1;
+				}
 			}
+			for (int i = 7; i <= 23; i++)
+			{
+				tileFull[0][i] = false;
+			}
+			linecomplete = false;
+			lines++;
+			SpeedUp();
 		}
-		for (int i = 7; i <= 23; i++)
-		{
-			tileFull[0][i] = false;
-		}
-		linecomplete = false;
-		lines++;
-		SpeedUp();
 	}
-		
 }
 
 Block::Block(Board& brd)
