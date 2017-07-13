@@ -84,6 +84,7 @@ void Game::ComposeFrame()
 		brd.DrawWall();
 		blck.DrawNextPiece(brd);
 		blck.DrawPiece(brd);
+		DrawScore(gfx);
 		break;
 	case gameover:
 		SpriteCodex::DrawGameOver(300, 250, gfx);
@@ -93,4 +94,132 @@ void Game::ComposeFrame()
 }
 
 
+void Game::DrawSingles(int x, int y, Graphics& gfx) 
+{
+	int singles = blck.lines % 10;
+	if (tens >= 10)
+	{
+		tens = 0;
+	}
+	switch (singles)
+	{
+	case 0:
+		SpriteCodex::DrawZero(x, y, gfx);
+		tens += 1;
+		if (tens >= 10)
+		{
+			tens = 0;
+		}
+		break;
+	case 1:
+		SpriteCodex::DrawOne(x, y, gfx);
+		break;
+	case 2:
+		SpriteCodex::DrawTwo(x, y, gfx);
+		break;
+	case 3:
+		SpriteCodex::DrawThree(x, y, gfx);
+		break;
+	case 4:
+		SpriteCodex::DrawFour(x, y, gfx);
+		break;
+	case 5:
+		SpriteCodex::DrawFive(x, y, gfx);
+		break;
+	case 6:
+		SpriteCodex::DrawSix(x, y, gfx);
+		break;
+	case 7:
+		SpriteCodex::DrawSeven(x, y, gfx);
+		break;
+	case 8:
+		SpriteCodex::DrawEight(x, y, gfx);
+		break;
+	case 9:
+		SpriteCodex::DrawNine(x, y, gfx);
+		break;
+	};
+}
+
+void Game::DrawTens(int x, int y, Graphics & gfx) const
+{
+	switch (tens)
+	{
+	case 0:
+		SpriteCodex::DrawZero(x, y, gfx);
+		break;
+	case 1:
+		SpriteCodex::DrawOne(x, y, gfx);
+		break;
+	case 2:
+		SpriteCodex::DrawTwo(x, y, gfx);
+		break;
+	case 3:
+		SpriteCodex::DrawThree(x, y, gfx);
+		break;
+	case 4:
+		SpriteCodex::DrawFour(x, y, gfx);
+		break;
+	case 5:
+		SpriteCodex::DrawFive(x, y, gfx);
+		break;
+	case 6:
+		SpriteCodex::DrawSix(x, y, gfx);
+		break;
+	case 7:
+		SpriteCodex::DrawSeven(x, y, gfx);
+		break;
+	case 8:
+		SpriteCodex::DrawEight(x, y, gfx);
+		break;
+	case 9:
+		SpriteCodex::DrawNine(x, y, gfx);
+		break;
+	};
+}
+
+void Game::DrawHunds(int x, int y, Graphics & gfx) const
+{
+	int hunds = blck.lines / 100;
+	switch (hunds)
+	{
+	case 0:
+		SpriteCodex::DrawZero(x, y, gfx);
+		break;
+	case 1:
+		SpriteCodex::DrawOne(x, y, gfx);
+		break;
+	case 2:
+		SpriteCodex::DrawTwo(x, y, gfx);
+		break;
+	case 3:
+		SpriteCodex::DrawThree(x, y, gfx);
+		break;
+	case 4:
+		SpriteCodex::DrawFour(x, y, gfx);
+		break;
+	case 5:
+		SpriteCodex::DrawFive(x, y, gfx);
+		break;
+	case 6:
+		SpriteCodex::DrawSix(x, y, gfx);
+		break;
+	case 7:
+		SpriteCodex::DrawSeven(x, y, gfx);
+		break;
+	case 8:
+		SpriteCodex::DrawEight(x, y, gfx);
+		break;
+	case 9:
+		SpriteCodex::DrawNine(x, y, gfx);
+		break;
+	};
+}
+
+void Game::DrawScore(Graphics& gfx)
+{
+	DrawSingles(670, 300, gfx);
+	DrawTens(650, 300, gfx);
+	DrawHunds(630, 300, gfx);
+}
 

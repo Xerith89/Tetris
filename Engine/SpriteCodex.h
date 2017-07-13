@@ -20,4 +20,14 @@ public:
 	static void DrawBlockWall(int x, int y, Graphics& gfx);
 	static void DrawLinesText(int x, int y, Graphics& gfx);
 	static void DrawNextText(int x, int y, Graphics& gfx);
+	static void DrawZero(int x, int y, Graphics& gfx);
+	static void DrawOne(int x, int y, Graphics& gfx);
+	static void DrawTwo(int x, int y, Graphics& gfx);
+	static void DrawThree(int x, int y, Graphics& gfx);
+	static void DrawFour(int x, int y, Graphics& gfx);
+	static void DrawFive(int x, int y, Graphics& gfx);
+	static void DrawSix(int x, int y, Graphics& gfx);
+	static void DrawSeven(int x, int y, Graphics& gfx);
+	static void DrawEight(int x, int y, Graphics& gfx);
+	static void DrawNine(int x, int y, Graphics& gfx);
 };

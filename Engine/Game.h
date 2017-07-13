@@ -52,11 +52,16 @@ private:
 	std::mt19937 rng;
 	std::uniform_int_distribution<int>blocksel;
 	int gamestate = 0;
+	int tens = -1;
 	enum GameState {
 		splashscreen,
 		playing,
 		gameover
 	};
+	void DrawSingles(int x, int y, Graphics& gfx);
+	void DrawTens(int x, int y, Graphics& gfx)const;
+	void DrawHunds(int x, int y, Graphics& gfx)const;
+	void DrawScore(Graphics& gfx);
 	/********************************/
 	/*  User Variables              */
 	/********************************/
