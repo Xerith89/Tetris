@@ -1063,18 +1063,32 @@ void Block::SetMostRight(int right)
 
 void Block::CheckLine()
 {
-	if (tileFull[loc[currentPiece].y][7] && tileFull[loc[currentPiece].y][8] && tileFull[loc[currentPiece].y][9] && tileFull[loc[currentPiece].y][10]
-		&& tileFull[loc[currentPiece].y][11] && tileFull[loc[currentPiece].y][12] && tileFull[loc[currentPiece].y][13] && tileFull[loc[currentPiece].y][14]
-		&& tileFull[loc[currentPiece].y][15] && tileFull[loc[currentPiece].y][16] && tileFull[loc[currentPiece].y][17] && tileFull[loc[currentPiece].y][18] &&
-		tileFull[loc[currentPiece].y][19] && tileFull[loc[currentPiece].y][20])
+	if (tileFull[loc[currentPiece].y][7] && tileFull[loc[currentPiece].y][8] && tileFull[loc[currentPiece].y][9] && tileFull[loc[currentPiece].y][10] && tileFull[loc[currentPiece].y][11] && tileFull[loc[currentPiece].y][12] && tileFull[loc[currentPiece].y][13] && tileFull[loc[currentPiece].y][14] && tileFull[loc[currentPiece].y][15] && tileFull[loc[currentPiece].y][16] && tileFull[loc[currentPiece].y][17] && tileFull[loc[currentPiece].y][18] && tileFull[loc[currentPiece].y][19] && tileFull[loc[currentPiece].y][20])
 	{
-		//loop through the board array that is above loc.y -move everything down by 1 on y for the true/false array;
-		//move everything being drawn down 1
-		//loop through top row and insert a row in the top of the board setting everything to false
-		//make it so that drawing can only be down if y is lower than the bottom of board
+		linecomplete = true;
+		for (int i = loc[currentPiece].y; i > 0; i--)
+		{
+			for (int j = 7; j <= 23; j++)
+			{
+				tileFull[i][j] = tileFull[i - 1][j];
+				}
+			}
+		for (int z = 0; z <= maxPieces; z++)
+		{
+			if (loc[z].y <= loc[currentPiece].y)
+			{
+				loc[z].y += 1;
+			}
+		}
+		for (int i = 7; i <= 23; i++)
+		{
+			tileFull[0][i] = false;
+		}
+		linecomplete = false;
 		lines++;
 		SpeedUp();
 	}
+		
 }
 
 Block::Block(Board& brd)

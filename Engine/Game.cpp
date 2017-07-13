@@ -85,6 +85,7 @@ void Game::ComposeFrame()
 		blck.DrawNextPiece(brd);
 		blck.DrawPiece(brd);
 		DrawScore(gfx);
+		brd.DrawOver();
 		break;
 	case gameover:
 		SpriteCodex::DrawGameOver(300, 250, gfx);
@@ -105,7 +106,10 @@ void Game::DrawSingles(int x, int y, Graphics& gfx)
 	{
 	case 0:
 		SpriteCodex::DrawZero(x, y, gfx);
-		tens += 1;
+		if (blck.linecomplete)
+		{
+			tens += 1;
+		}
 		if (tens >= 10)
 		{
 			tens = 0;

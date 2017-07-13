@@ -9,7 +9,7 @@ class Block
 private:
 	static constexpr int maxPieces = 100;
 	static constexpr int y = 29;
-	static constexpr int x = 23;
+	static constexpr int x = 24;
 	static constexpr int boardLeft = 7;
 	static constexpr int boardRight = 23;
 	static constexpr int boardBottom = 27;
@@ -71,5 +71,6 @@ public:
 	int nextPiece;
 	Block(Board& brd);
 	int lines = 0;
+	bool linecomplete = false;
 };
 

@@ -431,6 +431,14 @@ void Board::DrawWall()
 	}
 }
 
+void Board::DrawOver()
+{
+		for (int i = 7; i <= 27; i++)
+		{
+			SpriteCodex::DrawBlockWall(cellDimension*i, cellDimension*28, gfx);
+		}
+}
+
 
 Board::Board(Graphics & gfx)
 	:

@@ -52,7 +52,7 @@ private:
 	std::mt19937 rng;
 	std::uniform_int_distribution<int>blocksel;
 	int gamestate = 0;
-	int tens = -1;
+	int tens = 0;
 	enum GameState {
 		splashscreen,
 		playing,

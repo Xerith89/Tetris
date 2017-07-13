@@ -32,6 +32,7 @@ public:
 	void DrawRLRotUp(Location& loc)const;
 	void DrawRLRotRight(Location& loc)const;
 	void DrawWall();
+	void DrawOver();
 	Board(Graphics &gfx);
 };
 
