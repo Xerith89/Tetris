@@ -933,6 +933,7 @@ int Block::GetMostLeft()
 		}
 		break;
 	}
+	return 0;
 }
 
 int Block::GetMostRight()
@@ -1044,6 +1045,7 @@ int Block::GetMostRight()
 		}
 		break;
 	}
+	return 0;
 }
 
 int Block::GetPieceHeight()
@@ -1155,6 +1157,7 @@ int Block::GetPieceHeight()
 		}
 		break;
 	}
+	return 0;
 }
 
 void Block::SetMostLeft(int left)
@@ -1183,7 +1186,7 @@ void Block::CheckLine()
 			}
 			for (int z = 0; z <= maxPieces; z++)
 			{
-				if (loc[z].y <= loc[currentPiece].y)
+				if (loc[z].y <= loc[currentPiece].y && loc[z].y < 28)
 				{
 					loc[z].y += 1;
 				}
