@@ -82,8 +82,9 @@ void Game::ComposeFrame()
 		break;
 	case playing:
 		brd.DrawWall();
-		blck.DrawNextPiece(brd);
 		blck.DrawPiece(brd);
+		blck.DrawOver(gfx);
+		blck.DrawNextPiece(brd);
 		DrawScore(gfx);
 		brd.DrawOver();
 		break;

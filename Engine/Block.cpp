@@ -63,6 +63,7 @@ void Block::SpawnPiece(Board& brd, int randpiece)
 		break;
 	}
 	CheckLine();
+	isGameOver();
 	currentPiece++;
 	loc[currentPiece].x = spawnloc.x;
 	loc[currentPiece].y = spawnloc.y;
@@ -523,7 +524,7 @@ void Block::LLCollision(Board & brd)
 		left.x = middle.x;
 		left.y = middle.y - 1;
 
-		if (tileFull[origin.y + 1][origin.x] || tileFull[right.y + 1][right.x])
+		if (tileFull[origin.y + 1][origin.x] || tileFull[origin.y + 1][right.x])
 		{
 			SpawnPiece(brd, nextPiece);
 		}
@@ -654,6 +655,121 @@ void Block::SpeedUp()
 	speed = 3.0f+ (lines / 20);
 }
 
+void Block::drawCurrentPiece(Board & brd)
+{
+	switch (pieceType[currentPiece])
+	{
+	case cube:
+		brd.DrawCube(loc[currentPiece]);
+		break;
+	case line:
+		if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+		{
+			brd.DrawLineH(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+		{
+			brd.DrawLineV(loc[currentPiece]);
+		}
+		break;
+	case t:
+		if (rotated[currentPiece] == 0)
+		{
+			brd.DrawTD(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			brd.DrawTRotLeft(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			brd.DrawTRotUp(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			brd.DrawTRotRight(loc[currentPiece]);
+		}
+		break;
+	case z:
+		if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+		{
+			brd.DrawZH(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+		{
+			brd.DrawZV(loc[currentPiece]);
+		}
+		break;
+	case two:
+		if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
+		{
+			brd.Draw2H(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
+		{
+			brd.Draw2V(loc[currentPiece]);
+		}
+		break;
+	case leftl:
+		if (rotated[currentPiece] == 0)
+		{
+			brd.DrawLLL(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			brd.DrawLLRotL(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			brd.DrawLLRotUp(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			brd.DrawLLRotRight(loc[currentPiece]);
+		}
+
+		break;
+	case rightl:
+		if (rotated[currentPiece] == 0)
+		{
+			brd.DrawRLR(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 1)
+		{
+			brd.DrawRLRotL(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 2)
+		{
+			brd.DrawRLRotUp(loc[currentPiece]);
+		}
+		if (rotated[currentPiece] == 3)
+		{
+			brd.DrawRLRotRight(loc[currentPiece]);
+		}
+		break;
+	}
+}
+
+void Block::DrawOver(Graphics& gfx)
+{
+	for (int i = 0; i <= 27; i++)
+	{
+		for (int j = 7; j <= 23; j++)
+		{
+			if (!tileFull[i][j])
+			{
+				Location loca;
+				loca.y = i;
+				loca.x = j;
+
+				brd.DrawCell(loca, Colors::Black);
+			}
+				
+			}
+		}
+	drawCurrentPiece(brd);
+}
+
 bool Block::isGameOver()
 {
 	if (loc[currentPiece].y - 3 <=1)
@@ -765,9 +881,9 @@ void Block::LLFillTiles()
 	if (rotated[currentPiece] == 0)
 	{
 		tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
-		tileFull[loc[currentPiece].y][loc[currentPiece].x+1] = true;
-		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x +1] = true;
-		tileFull[loc[currentPiece].y - 2][loc[currentPiece].x + 1] = true;
+		tileFull[loc[currentPiece].y][loc[currentPiece].x-1] = true;
+		tileFull[loc[currentPiece].y - 1][loc[currentPiece].x] = true;
+		tileFull[loc[currentPiece].y - 2][loc[currentPiece].x] = true;
 	}
 	if (rotated[currentPiece] == 1)
 	{
@@ -996,7 +1112,7 @@ int Block::GetMostRight()
 		}
 		else if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
 		{
-			return 2;
+			return 0;
 			break;
 		}
 		break;
@@ -1179,14 +1295,14 @@ void Block::CheckLine()
 			linecomplete = true;
 			for (int i = loc[currentPiece].y; i > 0; i--)
 			{
-				for (int j = 7; j <= 23; j++)
+				for (int j = boardLeft; j <= boardRight; j++)
 				{
 					tileFull[i][j] = tileFull[i - 1][j];
 				}
 			}
 			for (int z = 0; z <= maxPieces; z++)
 			{
-				if (loc[z].y <= loc[currentPiece].y && loc[z].y < 28)
+				if (loc[z].y <= loc[currentPiece].y && loc[z].y < 30)
 				{
 					loc[z].y += 1;
 				}

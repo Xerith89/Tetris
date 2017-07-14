@@ -8,11 +8,11 @@ class Block
 {
 private:
 	static constexpr int maxPieces = 100;
-	static constexpr int y = 29;
+	static constexpr int y = 27;
 	static constexpr int x = 24;
 	static constexpr int boardLeft = 7;
 	static constexpr int boardRight = 23;
-	static constexpr int boardBottom = 27;
+	static constexpr int boardBottom = 26;
 	float speed = 3.0f;
 	Board& brd;
 	float inputCD = 2.5f;
@@ -53,8 +53,10 @@ private:
 	void RLCollision(Board& brd);
 	bool fullRow = false;
 	void SpeedUp();
+	void drawCurrentPiece(Board& brd);
 public:
 	bool isGameOver();
+	void DrawOver(Graphics& gfx);
 	void TakeInput(Keyboard::Event& kbd, float dt);
 	void SpawnPiece(Board& brd, int randpiece);
 	void DrawPiece(Board& brd);

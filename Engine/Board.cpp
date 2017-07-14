@@ -222,19 +222,19 @@ void Board::Draw2V(Location & loc) const
 //                                      Draw Left Side L Blocks
 void Board::DrawLLL(Location & loc) const
 {
-	Location bottomleft;
-	Location bottommiddle;
+	Location right;
+	Location middle;
 	Location top;
-	bottomleft = { loc.x-1,loc.y };
-	bottommiddle = { loc.x,loc.y-1 };
-	top = { bottommiddle.x,bottommiddle.y - 1 };
+	right = { loc.x-1,loc.y };
+	middle = { loc.x,loc.y-1 };
+	top = { middle.x,middle.y - 1 };
 	DrawCell(loc, Colors::Red);
-	DrawCell(bottomleft, Colors::Red);
-	DrawCell(bottommiddle, Colors::Red);
+	DrawCell(right, Colors::Red);
+	DrawCell(middle, Colors::Red);
 	DrawCell(top, Colors::Red);
 	SpriteCodex::DrawBlockRed(loc.x*cellDimension, loc.y*cellDimension, gfx);
-	SpriteCodex::DrawBlockRed(bottomleft.x*cellDimension, bottomleft.y*cellDimension, gfx);
-	SpriteCodex::DrawBlockRed(bottommiddle.x*cellDimension, bottommiddle.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(right.x*cellDimension, right.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(middle.x*cellDimension, middle.y*cellDimension, gfx);
 	SpriteCodex::DrawBlockRed(top.x*cellDimension, top.y*cellDimension, gfx);
 }
 void Board::DrawLLRotL(Location & loc) const
@@ -379,7 +379,7 @@ void Board::DrawWall()
 			SpriteCodex::DrawBlockWall(cellDimension * j, 0 + (cellDimension*i), gfx);
 		}
 	}
-	gfx.DrawRectDim(cellDimension *6, cellDimension*29, cellDimension*23, cellDimension, Colors::Black); //Draw Bottom Wall
+	gfx.DrawRectDim(cellDimension *6, cellDimension*27, cellDimension*24, cellDimension, Colors::Black); //Draw Bottom Wall
 	for (int i = 6; i < 29; i++)
 	{
 		SpriteCodex::DrawBlockWall(cellDimension * i, cellDimension*29, gfx);
@@ -433,9 +433,10 @@ void Board::DrawWall()
 
 void Board::DrawOver()
 {
-		for (int i = 7; i <= 27; i++)
+		for (int i = 7; i <= 28; i++)
 		{
 			SpriteCodex::DrawBlockWall(cellDimension*i, cellDimension*28, gfx);
+			SpriteCodex::DrawBlockWall(cellDimension*i, cellDimension * 27, gfx);
 		}
 }
 
