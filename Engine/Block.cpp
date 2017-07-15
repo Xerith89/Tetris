@@ -1136,12 +1136,12 @@ int Block::GetMostRight()
 	case two:
 		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
 		{
-			return 1;
+			return 0;
 			break;
 		}
 		else if (rotated[currentPiece] == 0 || rotated[currentPiece] == 2)
 		{
-			return 0;
+			return 2;
 			break;
 		}
 		break;
@@ -1309,7 +1309,12 @@ void Block::CheckLine()
 {
 	for (int t = 0; t <= GetPieceHeight(); t++)
 	{
-		if (tileFull[loc[currentPiece].y - t][7] && tileFull[loc[currentPiece].y - t][8] && tileFull[loc[currentPiece].y-t][9] && tileFull[loc[currentPiece].y-t][10] && tileFull[loc[currentPiece].y-t][11] && tileFull[loc[currentPiece].y-t][12] && tileFull[loc[currentPiece].y-t][13] && tileFull[loc[currentPiece].y-t][14] && tileFull[loc[currentPiece].y-t][15] && tileFull[loc[currentPiece].y-t][16] && tileFull[loc[currentPiece].y-t][17] && tileFull[loc[currentPiece].y-t][18] && tileFull[loc[currentPiece].y-t][19] && tileFull[loc[currentPiece].y-t][20])
+		if (tileFull[loc[currentPiece].y - t][7] && tileFull[loc[currentPiece].y - t][8] && tileFull[loc[currentPiece].y-t][9] 
+			&& tileFull[loc[currentPiece].y-t][10] && tileFull[loc[currentPiece].y-t][11] && tileFull[loc[currentPiece].y-t][12] 
+			&& tileFull[loc[currentPiece].y-t][13] && tileFull[loc[currentPiece].y-t][14] && tileFull[loc[currentPiece].y-t][15] 
+			&& tileFull[loc[currentPiece].y-t][16] && tileFull[loc[currentPiece].y-t][17] && tileFull[loc[currentPiece].y-t][18] 
+			&& tileFull[loc[currentPiece].y-t][19] && tileFull[loc[currentPiece].y-t][20] && tileFull[loc[currentPiece].y - t][21]
+			&& tileFull[loc[currentPiece].y - t][22] && tileFull[loc[currentPiece].y - t][23])
 		{
 			linecomplete = true;
 			for (int i = loc[currentPiece].y-t; i > 0; i--)
@@ -1326,7 +1331,7 @@ void Block::CheckLine()
 					loc[z].y += 1;
 				}
 			}
-			for (int i = 7; i <= 23; i++)
+			for (int i = boardLeft; i <= boardRight; i++)
 			{
 				tileFull[0][i] = false;
 			}
