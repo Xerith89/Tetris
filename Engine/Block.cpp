@@ -5,14 +5,16 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 	counter += speed * dt;
 	downCounter += speed *dt;
 	rotCounter += speed *dt;
-	if (kbd.IsPress() && kbd.GetCode() == VK_LEFT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x] == false && loc[currentPiece].y >= 6)
+	int xleftoffset = (loc[currentPiece].x - GetMostLeft())-1;
+	int xrightoffset = (loc[currentPiece].x + GetMostRight()) + 1;
+	if (kbd.IsPress() && kbd.GetCode() == VK_LEFT && counter >= inputCD && !tileFull[loc[currentPiece].y][xleftoffset] && loc[currentPiece].y >= 6)
 	{
 		playsidestepsound = true;
 		loc[currentPiece].x -= 1;
 		counter = 0.0f;
 	}
 
-	if (kbd.IsPress() && kbd.GetCode() == VK_RIGHT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x] == false && loc[currentPiece].y >= 6)
+	if (kbd.IsPress() && kbd.GetCode() == VK_RIGHT && counter >= inputCD && !tileFull[loc[currentPiece].y][xrightoffset] && loc[currentPiece].y >= 6)
 	{
 		playsidestepsound = true;
 		loc[currentPiece].x += 1;
