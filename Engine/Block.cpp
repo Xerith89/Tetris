@@ -1335,7 +1335,7 @@ void Block::CheckLine()
 					loc[z].y += 1;
 				}
 			}
-			for (int i = boardLeft-1; i <= boardRight; i++)
+			for (int i = boardLeft-1; i <= boardRight+1; i++)
 			{
 				tileFull[0][i] = false;
 			}

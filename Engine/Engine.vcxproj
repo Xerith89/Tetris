@@ -242,7 +242,6 @@
     <Media Include="Sounds\impact.wav" />
     <Media Include="Sounds\kb.wav" />
     <Media Include="Sounds\music.wav" />
-    <Media Include="Sounds\ready.wav" />
     <Media Include="Sounds\swish.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
