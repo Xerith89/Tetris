@@ -1313,17 +1313,17 @@ int Block::GetPieceHeight()
 
 void Block::CheckLine()
 {
-	for (int t = 0; t <= GetPieceHeight(); t++)
+	for (int t = 6; t <= 27; t++)
 	{
-		if (tileFull[loc[currentPiece].y - t][7] && tileFull[loc[currentPiece].y - t][8] && tileFull[loc[currentPiece].y-t][9] 
-			&& tileFull[loc[currentPiece].y-t][10] && tileFull[loc[currentPiece].y-t][11] && tileFull[loc[currentPiece].y-t][12] 
-			&& tileFull[loc[currentPiece].y-t][13] && tileFull[loc[currentPiece].y-t][14] && tileFull[loc[currentPiece].y-t][15] 
-			&& tileFull[loc[currentPiece].y-t][16] && tileFull[loc[currentPiece].y-t][17] && tileFull[loc[currentPiece].y-t][18] 
-			&& tileFull[loc[currentPiece].y-t][19] && tileFull[loc[currentPiece].y-t][20] && tileFull[loc[currentPiece].y - t][21]
-			&& tileFull[loc[currentPiece].y - t][22] && tileFull[loc[currentPiece].y - t][23])
+		if (tileFull[t][7] && tileFull[t][8] && tileFull[t][9] 
+			&& tileFull[t][10] && tileFull[t][11] && tileFull[t][12] 
+			&& tileFull[t][13] && tileFull[t][14] && tileFull[t][15] 
+			&& tileFull[t][16] && tileFull[t][17] && tileFull[t][18] 
+			&& tileFull[t][19] && tileFull[t][20] && tileFull[t][21]
+			&& tileFull[t][22] && tileFull[t][23])
 		{
 			linecomplete = true;
-			for (int i = loc[currentPiece].y-t; i > 0; i--)
+			for (int i = t; i > 0; i--)
 			{
 				for (int j = boardLeft-1; j <= boardRight+1; j++)
 				{
