@@ -37,7 +37,7 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 }
 	
 ////////////////////////////////////////////////////////////////////////
-void Block::SpawnPiece(const Board& brd, int randpiece)
+void Block::SpawnPiece(Board& brd, int randpiece)
 {
 	canSpawn = true;
 	switch (pieceType[currentPiece])

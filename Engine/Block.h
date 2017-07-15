@@ -58,7 +58,7 @@ public:
 	bool isGameOver();
 	void DrawOver(Graphics& gfx);
 	void TakeInput(Keyboard::Event& kbd, float dt);
-	void SpawnPiece(const Board& brd, int randpiece);
+	void SpawnPiece(Board& brd, int randpiece);
 	void DrawPiece(const Board& brd);
 	void DrawNextPiece(const Board& brd);
 	void BindPiece();
