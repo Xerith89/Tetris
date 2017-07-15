@@ -8,8 +8,21 @@ void Board::DrawCell(Location & loc,Color c)const
 //										Cube Drawing Code White
 void Board::DrawCube(Location & loc)const
 {
+	Location bottomright;
+	Location topleft;
+	Location topright;
+
+	bottomright = { loc.y,loc.x + 1 };
+	topleft = { loc.y - 1,loc.x };
+	topright = { loc.y - 1,loc.x + 1 };
 	DrawCell(loc, Colors::White);
+	DrawCell(bottomright, Colors::White);
+	DrawCell(topleft, Colors::White);
+	DrawCell(topright, Colors::White);
 	SpriteCodex::DrawBlockWhite(loc.x*cellDimension, loc.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockWhite(bottomright.x*cellDimension, bottomright.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockWhite(topleft.x*cellDimension, topleft.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockWhite(topright.x*cellDimension, topright.y*cellDimension, gfx);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

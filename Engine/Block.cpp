@@ -307,11 +307,12 @@ void Block::BindPiece()
 void Block::CubeCollision(Board& brd)
 {
 	
-	Location bottom;
-	bottom.x = loc[currentPiece].x;
-	bottom.y = loc[currentPiece].y;
+	Location bottomleft;
+	Location bottomright;
+	bottomleft = { loc[currentPiece].y, loc[currentPiece].x };
+	bottomright = { loc[currentPiece].y, loc[currentPiece].x+1};
 	
-	if ( tileFull[bottom.y+1][bottom.x])
+	if ( tileFull[bottomleft.y+1][bottomleft.x] || tileFull[bottomright.y + 1][bottomright.x])
 	{
 		playimpactsound = true;
 		SpawnPiece(brd, nextPiece);
@@ -817,6 +818,9 @@ bool Block::isGameOver()
 void Block::CubeFillTiles()
 {
 	tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;
+	tileFull[loc[currentPiece].y][loc[currentPiece].x+1] = true;
+	tileFull[loc[currentPiece].y-1][loc[currentPiece].x] = true;
+	tileFull[loc[currentPiece].y-1][loc[currentPiece].x+1] = true;
 }
 
 void Block::LineFillTiles()
@@ -1086,7 +1090,7 @@ int Block::GetMostRight()
 	switch (pieceType[currentPiece])
 	{
 	case cube:
-		return 0;
+		return 1;
 		break;
 	case line:
 		if (rotated[currentPiece] == 1 || rotated[currentPiece] == 3)
