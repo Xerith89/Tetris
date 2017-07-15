@@ -21,14 +21,17 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd ),
+	wnd(wnd),
+	gfx(wnd),
 	brd(gfx),
 	rng(rd()),
 	blck(brd),
-	blocksel(0,6)
+	blocksel(0, 6),
+	gameoversound(L"Sounds\\fart.wav"),
+	linecomplete(L"Sounds\\arkbrick.wav"),
+	blocksound(L"Sounds\\kb.wav")
 {
 	blck.loc[0] = { blck.spawnloc };
 	blck.nextPiece = blocksel(rng);
@@ -57,7 +60,17 @@ void Game::UpdateModel()
 		break;
 	case playing:
 		blck.TakeInput(wnd.kbd.ReadKey(), dt);
-		blck.BindPiece(dt);
+		blck.BindPiece();
+		if (blck.playlinesound)
+		{
+			linecomplete.Play();
+			blck.playlinesound = false;
+		}
+		if (blck.playblocksound)
+		{
+			blocksound.Play();
+			blck.playblocksound = false;
+		}
 		if (blck.canSpawn)
 		{
 			blck.nextPiece = blocksel(rng);
@@ -65,6 +78,7 @@ void Game::UpdateModel()
 		}
 		if (blck.isGameOver())
 		{
+			gameoversound.Play();
 			gamestate = gameover;
 		}
 		break;

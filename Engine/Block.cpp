@@ -13,6 +13,7 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 
 	if (kbd.IsPress() && kbd.GetCode() == VK_RIGHT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x] == false)
 	{
+
 		loc[currentPiece].x += 1;
 		counter = 0.0f;
 	}
@@ -23,6 +24,7 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 	}
 	if (kbd.IsPress() && kbd.GetCode() == VK_UP && rotCounter >= rotCD)
 	{
+		playblocksound = true;
 		if (rotated[currentPiece] < 3)
 		{
 			rotated[currentPiece]++;
@@ -35,7 +37,7 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 }
 	
 ////////////////////////////////////////////////////////////////////////
-void Block::SpawnPiece(Board& brd, int randpiece)
+void Block::SpawnPiece(const Board& brd, int randpiece)
 {
 	canSpawn = true;
 	switch (pieceType[currentPiece])
@@ -101,7 +103,7 @@ void Block::SpawnPiece(Board& brd, int randpiece)
 	canDraw[currentPiece] = true;
 }
 
-void Block::DrawPiece(Board & brd)
+void Block::DrawPiece(const Board & brd)
 {
 	for (int i = 0; i < maxPieces; i++)
 	{
@@ -202,7 +204,7 @@ void Block::DrawPiece(Board & brd)
 		}
 	}
 
-void Block::DrawNextPiece(Board & brd)
+void Block::DrawNextPiece(const Board & brd)
 {
 	switch (nextPiece)
 	{
@@ -231,7 +233,7 @@ void Block::DrawNextPiece(Board & brd)
 	
 }
 
-void Block::BindPiece(float dt)
+void Block::BindPiece()
 {
 	if (loc[currentPiece].x - GetMostLeft() <= boardLeft)
 	{
@@ -314,6 +316,7 @@ void Block::CubeCollision(Board& brd)
 	{
 		SpawnPiece(brd, nextPiece);
 	}
+	isGameOver();
 }
 
 void Block::LineCollision(Board & brd)
@@ -354,6 +357,7 @@ void Block::LineCollision(Board & brd)
 			SpawnPiece(brd, nextPiece);
 		}
 	}
+	isGameOver();
 }
 
 void Block::TCollision(Board & brd)
@@ -424,6 +428,7 @@ void Block::TCollision(Board & brd)
 			SpawnPiece(brd, nextPiece);
 		}
 	}
+	isGameOver();
 }
 
 void Block::ZCollision(Board & brd)
@@ -464,6 +469,7 @@ void Block::ZCollision(Board & brd)
 			SpawnPiece(brd, nextPiece);
 		}
 	}
+	isGameOver();
 }
 
 void Block::TwoCollision(Board & brd)
@@ -504,6 +510,7 @@ void Block::TwoCollision(Board & brd)
 			SpawnPiece(brd, nextPiece);
 		}
 	}
+	isGameOver();
 }
 
 void Block::LLCollision(Board & brd)
@@ -576,6 +583,7 @@ void Block::LLCollision(Board & brd)
 			SpawnPiece(brd, nextPiece);
 		}
 	}
+	isGameOver();
 }
 
 void Block::RLCollision(Board & brd)
@@ -632,6 +640,7 @@ void Block::RLCollision(Board & brd)
 			SpawnPiece(brd, nextPiece);
 		}
 	}
+
 	else if (rotated[currentPiece] == 3)
 	{
 		origin.x = loc[currentPiece].x;
@@ -648,6 +657,7 @@ void Block::RLCollision(Board & brd)
 			SpawnPiece(brd, nextPiece);
 		}
 	}
+	isGameOver();
 }
 
 void Block::SpeedUp()
@@ -772,7 +782,8 @@ void Block::DrawOver(Graphics& gfx)
 
 bool Block::isGameOver()
 {
-	if (loc[currentPiece].y - 3 <=1)
+	
+	if (loc[currentPiece].y <= 6 && tileFull[loc[currentPiece].y][loc[currentPiece].x])
 	{
 		return true;
 	}
@@ -780,6 +791,7 @@ bool Block::isGameOver()
 	{
 		return false;
 	}
+	
 	
 }
 
@@ -1276,16 +1288,6 @@ int Block::GetPieceHeight()
 	return 0;
 }
 
-void Block::SetMostLeft(int left)
-{
-	loc[currentPiece].x = left;
-}
-
-void Block::SetMostRight(int right)
-{
-	loc[currentPiece].x = right;
-}
-
 void Block::CheckLine()
 {
 	for (int t = GetPieceHeight(); t >= 0; t--)
@@ -1312,6 +1314,7 @@ void Block::CheckLine()
 				tileFull[0][i] = false;
 			}
 			linecomplete = false;
+			playlinesound = true;
 			lines++;
 			SpeedUp();
 		}

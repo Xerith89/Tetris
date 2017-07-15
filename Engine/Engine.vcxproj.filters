@@ -139,5 +139,8 @@
     <Media Include="Sounds\ready.wav">
       <Filter>Sounds</Filter>
     </Media>
+    <Media Include="Sounds\kb.wav">
+      <Filter>Sounds</Filter>
+    </Media>
   </ItemGroup>
 </Project>

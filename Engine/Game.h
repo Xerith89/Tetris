@@ -28,6 +28,7 @@
 #include "Block.h"
 #include "FrameTimer.h"
 #include <random>
+#include "Sound.h"
 
 class Game
 {
@@ -53,6 +54,9 @@ private:
 	std::uniform_int_distribution<int>blocksel;
 	int gamestate = 0;
 	int tens = 0;
+	Sound gameoversound;
+	Sound linecomplete;
+	Sound blocksound;
 	enum GameState {
 		splashscreen,
 		playing,

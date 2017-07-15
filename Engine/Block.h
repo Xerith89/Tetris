@@ -15,9 +15,9 @@ private:
 	static constexpr int boardBottom = 26;
 	float speed = 3.0f;
 	Board& brd;
-	float inputCD = 2.5f;
-	float downCD = 2.5f;
-	float rotCD = 2.5f;
+	static constexpr float inputCD = 2.5f;
+	static constexpr float downCD = 2.5f;
+	static constexpr float rotCD = 2.5f;
 	float counter = 0.0f;
 	float downCounter = 0.0f;
 	float rotCounter = 0.0f;
@@ -34,8 +34,6 @@ private:
 	int GetMostLeft();
 	int GetMostRight();
 	int GetPieceHeight();
-	void SetMostLeft(int left);
-	void SetMostRight(int right);
 	void CheckLine();
 	void CubeCollision(Board& brd);
 	void LineCollision(Board& brd);
@@ -54,19 +52,19 @@ private:
 	bool fullRow = false;
 	void SpeedUp();
 	void drawCurrentPiece(Board& brd);
+	bool canDraw[maxPieces] = { false };
+	bool tileFull[y][x] = { false };
 public:
 	bool isGameOver();
 	void DrawOver(Graphics& gfx);
 	void TakeInput(Keyboard::Event& kbd, float dt);
-	void SpawnPiece(Board& brd, int randpiece);
-	void DrawPiece(Board& brd);
-	void DrawNextPiece(Board& brd);
-	void BindPiece(float dt);
+	void SpawnPiece(const Board& brd, int randpiece);
+	void DrawPiece(const Board& brd);
+	void DrawNextPiece(const Board& brd);
+	void BindPiece();
 	Location nextBrick = { 33,25 };
-	Location spawnloc = { 13,5};
+	Location spawnloc = { 13,3};
 	Location loc[maxPieces];
-	bool tileFull[y][x] = { false };
-	bool canDraw[maxPieces] = { false };
 	int currentPiece = 0;
 	int pieceType[maxPieces];
 	bool canSpawn = false;
@@ -74,5 +72,7 @@ public:
 	Block(Board& brd);
 	int lines = 0;
 	bool linecomplete = false;
+	bool playlinesound = false;
+	bool playblocksound = false;
 };
 
