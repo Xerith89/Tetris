@@ -58,6 +58,7 @@ void Game::UpdateModel()
 	case splashscreen:
 		if (wnd.kbd.KeyIsPressed(VK_RETURN))
 		{
+			intromusic.StopOne();
 			gamestate = playing;
 		}
 		if (playintro)
