@@ -31,8 +31,8 @@ public:
 	void DrawRLRotL(Location& loc)const;
 	void DrawRLRotUp(Location& loc)const;
 	void DrawRLRotRight(Location& loc)const;
-	void DrawWall();
-	void DrawOver();
+	void DrawWall()const;
+	void DrawOver()const;
 	Board(Graphics &gfx);
 };
 

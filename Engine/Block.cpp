@@ -37,7 +37,6 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 	}
 }
 	
-////////////////////////////////////////////////////////////////////////
 void Block::SpawnPiece(Board& brd, int randpiece)
 {
 	playimpactsound = true;
@@ -305,8 +304,6 @@ void Block::BindPiece()
 	}
 }
 
-/////////////////////////////////////////////////////////////
-//				Collision Code
 void Block::CubeCollision(Board& brd)
 {
 	
@@ -817,8 +814,6 @@ bool Block::isGameOver()
 	
 }
 
-/////////////////////////////////////////////////
-//			Set Tile Array
 void Block::CubeFillTiles()
 {
 	tileFull[loc[currentPiece].y][loc[currentPiece].x] = true;

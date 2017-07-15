@@ -364,7 +364,7 @@ void Board::DrawRLRotRight(Location & loc) const
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //												Draw the Board Layout
-void Board::DrawWall()
+void Board::DrawWall()const
 {
 	//left
 	for (int i = 0; i < cellDimension+10; i++)
@@ -440,7 +440,7 @@ void Board::DrawWall()
 	}
 }
 
-void Board::DrawOver()
+void Board::DrawOver()const
 {
 		for (int i = 7; i <= 28; i++)
 		{
