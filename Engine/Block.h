@@ -8,7 +8,7 @@ class Block
 {
 private:
 	static constexpr int maxPieces = 100;
-	static constexpr int y = 27;
+	static constexpr int y = 28;
 	static constexpr int x = 24;
 	static constexpr int boardLeft = 7;
 	static constexpr int boardRight = 23;

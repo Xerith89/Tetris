@@ -1319,7 +1319,7 @@ void Block::CheckLine()
 			linecomplete = true;
 			for (int i = loc[currentPiece].y-t; i > 0; i--)
 			{
-				for (int j = boardLeft; j <= boardRight; j++)
+				for (int j = boardLeft-1; j <= boardRight+1; j++)
 				{
 					tileFull[i][j] = tileFull[i - 1][j];
 				}
@@ -1331,7 +1331,7 @@ void Block::CheckLine()
 					loc[z].y += 1;
 				}
 			}
-			for (int i = boardLeft; i <= boardRight; i++)
+			for (int i = boardLeft-1; i <= boardRight; i++)
 			{
 				tileFull[0][i] = false;
 			}
