@@ -5,24 +5,24 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 	counter += speed * dt;
 	downCounter += speed *dt;
 	rotCounter += speed *dt;
-	if (kbd.IsPress() && kbd.GetCode() == VK_LEFT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x] == false)
+	if (kbd.IsPress() && kbd.GetCode() == VK_LEFT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x] == false && loc[currentPiece].y >= 6)
 	{
 		loc[currentPiece].x -= 1;
 		counter = 0.0f;
 	}
 
-	if (kbd.IsPress() && kbd.GetCode() == VK_RIGHT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x] == false)
+	if (kbd.IsPress() && kbd.GetCode() == VK_RIGHT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x] == false && loc[currentPiece].y >= 6)
 	{
 
 		loc[currentPiece].x += 1;
 		counter = 0.0f;
 	}
-	if (kbd.IsPress() && kbd.GetCode() == VK_DOWN && counter >= inputCD)
+	if (kbd.IsPress() && kbd.GetCode() == VK_DOWN && counter >= inputCD && loc[currentPiece].y >= 6)
 	{
 		loc[currentPiece].y += 1;
 		counter = 0.0f;
 	}
-	if (kbd.IsPress() && kbd.GetCode() == VK_UP && rotCounter >= rotCD)
+	if (kbd.IsPress() && kbd.GetCode() == VK_UP && rotCounter >= rotCD && loc[currentPiece].y > 6)
 	{
 		playblocksound = true;
 		if (rotated[currentPiece] < 3)
@@ -103,7 +103,7 @@ void Block::SpawnPiece(Board& brd, int randpiece)
 	canDraw[currentPiece] = true;
 }
 
-void Block::DrawPiece(const Board & brd)
+void Block::DrawPiece( Board & brd)
 {
 	for (int i = 0; i < maxPieces; i++)
 	{
@@ -204,7 +204,7 @@ void Block::DrawPiece(const Board & brd)
 		}
 	}
 
-void Block::DrawNextPiece(const Board & brd)
+void Block::DrawNextPiece(Board & brd)
 {
 	switch (nextPiece)
 	{
@@ -762,7 +762,7 @@ void Block::drawCurrentPiece(Board & brd)
 
 void Block::DrawOver(Graphics& gfx)
 {
-	for (int i = 0; i <= 27; i++)
+	for (int i = 6; i <= 27; i++)
 	{
 		for (int j = 7; j <= 23; j++)
 		{

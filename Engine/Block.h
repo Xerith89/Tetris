@@ -59,8 +59,8 @@ public:
 	void DrawOver(Graphics& gfx);
 	void TakeInput(Keyboard::Event& kbd, float dt);
 	void SpawnPiece(Board& brd, int randpiece);
-	void DrawPiece(const Board& brd);
-	void DrawNextPiece(const Board& brd);
+	void DrawPiece( Board& brd);
+	void DrawNextPiece( Board& brd);
 	void BindPiece();
 	Location nextBrick = { 33,25 };
 	Location spawnloc = { 13,3};

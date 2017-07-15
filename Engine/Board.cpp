@@ -366,25 +366,34 @@ void Board::DrawRLRotRight(Location & loc) const
 //												Draw the Board Layout
 void Board::DrawWall()
 {
-	gfx.DrawRectDim(cellDimension*6, 0, cellDimension, cellDimension * 30,Colors::Black); //Draw Left Wall
+	//left
 	for (int i = 0; i < cellDimension+10; i++)
 	{
 		SpriteCodex::DrawBlockWall(cellDimension*6, 0+(cellDimension*i), gfx);
 	}
-	gfx.DrawRectDim(cellDimension * 24, 0, cellDimension, cellDimension * 30, Colors::Black); //Draw Right Wall
 	for (int i = 0; i < cellDimension + 10; i++)
 	{
 		for (int j = 24; j <= 28; j++)
 		{
-			SpriteCodex::DrawBlockWall(cellDimension * j, 0 + (cellDimension*i), gfx);
+			SpriteCodex::DrawBlockWall(cellDimension * j, 0 + (cellDimension*i), gfx);//right
 		}
 	}
-	gfx.DrawRectDim(cellDimension *6, cellDimension*27, cellDimension*24, cellDimension, Colors::Black); //Draw Bottom Wall
+	
 	for (int i = 6; i < 29; i++)
 	{
-		SpriteCodex::DrawBlockWall(cellDimension * i, cellDimension*29, gfx);
+		SpriteCodex::DrawBlockWall(cellDimension * i, cellDimension*29, gfx);//bottom
 	}
-	gfx.DrawRectDim(cellDimension * 6, cellDimension * 28, cellDimension * 29, cellDimension, Colors::Black); //Draw Bottom Wall
+	
+	for (int j = 0; j <= 6; j++)
+	{
+		for (int i = 6; i < 24; i++)
+		{
+			SpriteCodex::DrawBlockWall(cellDimension * i, cellDimension * j, gfx);
+		}
+	}
+
+	
+	//rest of the board
 	for (int i = 6; i < 29; i++)
 	{
 		SpriteCodex::DrawBlockWall(cellDimension * i, cellDimension * 28, gfx);
