@@ -40,6 +40,7 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 ////////////////////////////////////////////////////////////////////////
 void Block::SpawnPiece(Board& brd, int randpiece)
 {
+	playimpactsound = true;
 	canSpawn = true;
 	switch (pieceType[currentPiece])
 	{
