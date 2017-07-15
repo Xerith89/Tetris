@@ -309,8 +309,8 @@ void Block::CubeCollision(Board& brd)
 	
 	Location bottomleft;
 	Location bottomright;
-	bottomleft = { loc[currentPiece].y, loc[currentPiece].x };
-	bottomright = { loc[currentPiece].y, loc[currentPiece].x+1};
+	bottomleft = { loc[currentPiece].x,loc[currentPiece].y };
+	bottomright = {loc[currentPiece].x+1,loc[currentPiece].y };
 	
 	if ( tileFull[bottomleft.y+1][bottomleft.x] || tileFull[bottomright.y + 1][bottomright.x])
 	{

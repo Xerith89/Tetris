@@ -12,9 +12,9 @@ void Board::DrawCube(Location & loc)const
 	Location topleft;
 	Location topright;
 
-	bottomright = { loc.y,loc.x + 1 };
-	topleft = { loc.y - 1,loc.x };
-	topright = { loc.y - 1,loc.x + 1 };
+	bottomright = {loc.x + 1,loc.y };
+	topleft = { loc.x,loc.y - 1 };
+	topright = { loc.x + 1,loc.y - 1 };
 	DrawCell(loc, Colors::White);
 	DrawCell(bottomright, Colors::White);
 	DrawCell(topleft, Colors::White);
