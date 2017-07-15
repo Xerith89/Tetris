@@ -222,18 +222,18 @@ void Board::Draw2V(Location & loc) const
 //                                      Draw Left Side L Blocks
 void Board::DrawLLL(Location & loc) const
 {
-	Location right;
+	Location left;
 	Location middle;
 	Location top;
-	right = { loc.x-1,loc.y };
+	left = { loc.x-1,loc.y };
 	middle = { loc.x,loc.y-1 };
 	top = { middle.x,middle.y - 1 };
 	DrawCell(loc, Colors::Red);
-	DrawCell(right, Colors::Red);
+	DrawCell(left, Colors::Red);
 	DrawCell(middle, Colors::Red);
 	DrawCell(top, Colors::Red);
 	SpriteCodex::DrawBlockRed(loc.x*cellDimension, loc.y*cellDimension, gfx);
-	SpriteCodex::DrawBlockRed(right.x*cellDimension, right.y*cellDimension, gfx);
+	SpriteCodex::DrawBlockRed(left.x*cellDimension, left.y*cellDimension, gfx);
 	SpriteCodex::DrawBlockRed(middle.x*cellDimension, middle.y*cellDimension, gfx);
 	SpriteCodex::DrawBlockRed(top.x*cellDimension, top.y*cellDimension, gfx);
 }

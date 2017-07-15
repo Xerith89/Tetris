@@ -63,7 +63,7 @@ public:
 	void DrawNextPiece( Board& brd);
 	void BindPiece();
 	Location nextBrick = { 33,25 };
-	Location spawnloc = { 13,3};
+	Location spawnloc = { 17,3};
 	Location loc[maxPieces];
 	int currentPiece = 0;
 	int pieceType[maxPieces];
@@ -74,5 +74,7 @@ public:
 	bool linecomplete = false;
 	bool playlinesound = false;
 	bool playblocksound = false;
+	bool playimpactsound = false;
+	bool playsidestepsound = false;
 };
 

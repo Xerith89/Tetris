@@ -7,13 +7,14 @@ void Block::TakeInput(Keyboard::Event & kbd, float dt)
 	rotCounter += speed *dt;
 	if (kbd.IsPress() && kbd.GetCode() == VK_LEFT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x] == false && loc[currentPiece].y >= 6)
 	{
+		playsidestepsound = true;
 		loc[currentPiece].x -= 1;
 		counter = 0.0f;
 	}
 
 	if (kbd.IsPress() && kbd.GetCode() == VK_RIGHT && counter >= inputCD && tileFull[loc[currentPiece].y][loc[currentPiece].x] == false && loc[currentPiece].y >= 6)
 	{
-
+		playsidestepsound = true;
 		loc[currentPiece].x += 1;
 		counter = 0.0f;
 	}
@@ -314,8 +315,10 @@ void Block::CubeCollision(Board& brd)
 	
 	if ( tileFull[bottom.y+1][bottom.x])
 	{
+		playimpactsound = true;
 		SpawnPiece(brd, nextPiece);
 	}
+	
 	isGameOver();
 }
 
@@ -338,6 +341,7 @@ void Block::LineCollision(Board & brd)
 
 		if (tileFull[left.y + 1][left.x] || tileFull[middleleft.y + 1][middleleft.x] || tileFull[middleright.y + 1][middleright.x] || tileFull[right.y + 1][right.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -354,6 +358,7 @@ void Block::LineCollision(Board & brd)
 
 		if (tileFull[left.y + 1][left.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -380,6 +385,7 @@ void Block::TCollision(Board & brd)
 
 		if (tileFull[tee.y + 1][tee.x] || tileFull[left.y + 1][left.x] || tileFull[right.y + 1][right.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -395,6 +401,7 @@ void Block::TCollision(Board & brd)
 		tee.y = loc[currentPiece].y-1;
 		if (tileFull[tee.y + 1][tee.x] || tileFull[left.y + 1][left.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -410,6 +417,7 @@ void Block::TCollision(Board & brd)
 		tee.y = loc[currentPiece].y-1;
 		if (tileFull[left.y + 1][left.x] || tileFull[middle.y + 1][middle.x] || tileFull[right.y + 1][right.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -425,6 +433,7 @@ void Block::TCollision(Board & brd)
 		tee.y = loc[currentPiece].y - 1;
 		if (tileFull[tee.y + 1][tee.x] || tileFull[left.y + 1][left.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -450,6 +459,7 @@ void Block::ZCollision(Board & brd)
 
 		if (tileFull[origin.y + 1][origin.x] || tileFull[topleft.y + 1][topleft.x] || tileFull[bottomright.y + 1][bottomright.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -466,6 +476,7 @@ void Block::ZCollision(Board & brd)
 
 		if (tileFull[origin.y + 1][origin.x] || tileFull[topright.y + 1][topright.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -491,6 +502,7 @@ void Block::TwoCollision(Board & brd)
 
 		if (tileFull[origin.y + 1][origin.x] || tileFull[topleft.y + 1][topleft.x] || tileFull[bottomright.y + 1][bottomright.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -507,6 +519,7 @@ void Block::TwoCollision(Board & brd)
 
 		if (tileFull[origin.y + 1][origin.x] || tileFull[topright.y + 1][topright.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -524,15 +537,16 @@ void Block::LLCollision(Board & brd)
 	{
 		origin.x = loc[currentPiece].x;
 		origin.y = loc[currentPiece].y;
-		right.x = origin.x + 1;
+		right.x = origin.x - 1;
 		right.y = origin.y;
-		middle.x = right.x;
-		middle.y = right.y-1;
+		middle.x = origin.x;
+		middle.y = origin.y-1;
 		left.x = middle.x;
 		left.y = middle.y - 1;
 
 		if (tileFull[origin.y + 1][origin.x] || tileFull[origin.y + 1][right.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -549,6 +563,7 @@ void Block::LLCollision(Board & brd)
 
 		if (tileFull[origin.y + 1][origin.x] || tileFull[right.y + 1][right.x] || tileFull[middle.y + 1][middle.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -564,6 +579,7 @@ void Block::LLCollision(Board & brd)
 		left.y = middle.y;
 		if (tileFull[left.y + 1][left.x] || tileFull[origin.y + 1][origin.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -580,6 +596,7 @@ void Block::LLCollision(Board & brd)
 
 		if (tileFull[origin.y + 1][origin.x] || tileFull[left.y + 1][left.x] || tileFull[middle.y + 1][middle.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -606,6 +623,7 @@ void Block::RLCollision(Board & brd)
 
 		if (tileFull[origin.y + 1][origin.x] || tileFull[right.y + 1][right.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -622,6 +640,7 @@ void Block::RLCollision(Board & brd)
 	
 		if (tileFull[origin.y + 1][origin.x] || tileFull[right.y + 1][right.x] || tileFull[middle.y + 1][middle.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -637,6 +656,7 @@ void Block::RLCollision(Board & brd)
 		left.y = middle.y;
 		if (tileFull[left.y + 1][left.x] || tileFull[origin.y + 1][origin.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}
@@ -654,6 +674,7 @@ void Block::RLCollision(Board & brd)
 
 		if (tileFull[origin.y + 1][origin.x] || tileFull[right.y + 1][right.x] || tileFull[middle.y + 1][middle.x])
 		{
+			playimpactsound = true;
 			SpawnPiece(brd, nextPiece);
 		}
 	}

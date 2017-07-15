@@ -31,7 +31,10 @@ Game::Game(MainWindow& wnd)
 	blocksel(0, 6),
 	gameoversound(L"Sounds\\fart.wav"),
 	linecomplete(L"Sounds\\arkbrick.wav"),
-	blocksound(L"Sounds\\kb.wav")
+	blocksound(L"Sounds\\kb.wav"),
+	impact(L"Sounds\\impact.wav"),
+	sidestep(L"Sounds\\swish.wav"),
+	intromusic(L"Sounds\\music.wav")
 {
 	blck.loc[0] = { blck.spawnloc };
 	blck.nextPiece = blocksel(rng);
@@ -57,6 +60,11 @@ void Game::UpdateModel()
 		{
 			gamestate = playing;
 		}
+		if (playintro)
+		{
+			intromusic.Play();
+			playintro = false;
+		}
 		break;
 	case playing:
 		blck.TakeInput(wnd.kbd.ReadKey(), dt);
@@ -66,6 +74,17 @@ void Game::UpdateModel()
 			linecomplete.Play();
 			blck.playlinesound = false;
 		}
+		if (blck.playimpactsound)
+		{
+			impact.Play();
+			blck.playimpactsound = false;
+		}
+		if (blck.playsidestepsound)
+		{
+			sidestep.Play();
+			blck.playsidestepsound = false;
+		}
+
 		if (blck.playblocksound)
 		{
 			blocksound.Play();
@@ -83,8 +102,6 @@ void Game::UpdateModel()
 		}
 		break;
 	}
-	
-	
 }
 
 void Game::ComposeFrame()
@@ -106,9 +123,7 @@ void Game::ComposeFrame()
 		SpriteCodex::DrawGameOver(300, 250, gfx);
 		break;
 	}
-	
 }
-
 
 void Game::DrawSingles(int x, int y, Graphics& gfx) 
 {

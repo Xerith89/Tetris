@@ -142,5 +142,14 @@
     <Media Include="Sounds\kb.wav">
       <Filter>Sounds</Filter>
     </Media>
+    <Media Include="Sounds\swish.wav">
+      <Filter>Sounds</Filter>
+    </Media>
+    <Media Include="Sounds\impact.wav">
+      <Filter>Sounds</Filter>
+    </Media>
+    <Media Include="Sounds\music.wav">
+      <Filter>Sounds</Filter>
+    </Media>
   </ItemGroup>
 </Project>

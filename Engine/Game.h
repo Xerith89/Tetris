@@ -57,6 +57,9 @@ private:
 	Sound gameoversound;
 	Sound linecomplete;
 	Sound blocksound;
+	Sound impact;
+	Sound sidestep;
+	Sound intromusic;
 	enum GameState {
 		splashscreen,
 		playing,
@@ -66,6 +69,7 @@ private:
 	void DrawTens(int x, int y, Graphics& gfx)const;
 	void DrawHunds(int x, int y, Graphics& gfx)const;
 	void DrawScore(Graphics& gfx);
+	bool playintro = true;
 	/********************************/
 	/*  User Variables              */
 	/********************************/
